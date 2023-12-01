@@ -129,8 +129,94 @@
         <section>
             <h2>Architecture</h2>
             <p>
-
+                More information about our architecture and its purpose can be found in the form of an <a
+                    href="TODO: ADD ME">architecture diagram</a>, as well as a <a href="TODO: ADD ME">use-case
+                    diagram</a>.
             </p>
+
+            <section>
+                <h3>Front-end</h3>
+
+                <p>
+                    The front-end of our app will handle the presentation and interactivity. It will allow users to
+                    authenticate, set their preferences and browse content scraped from various sources. The front-end
+                    will load data from the back-end via HTTP calls to our REST API that is exposed via a gateway.
+                </p>
+            </section>
+
+            <section>
+                <h3>Back-end</h3>
+
+                <section>
+                    <h4>Services</h4>
+
+                    <ul>
+                        <li>
+                            <section>
+                                <h5>Web App</h5>
+
+                                <p>
+                                    This is where the most of our business logic will reside. The web app is responsible
+                                    for serving the dynamic content the users are requesting, along with various
+                                    features such as filtering and ordering.
+                                </p>
+                            </section>
+                        </li>
+
+                        <li>
+                            <section>
+                                <h5>Authentication Service</h5>
+
+                                <p>
+                                    This service will handle the authentication and authorization of our users, and will
+                                    be used to check for and assign the correct permissions to users. We have currently
+                                    planned for 3 tiers of users, namely anonymous (unauthenticated), authenticated and
+                                    moderators/administrators, but the system is designed is such a way as to allow for
+                                    easily adding new roles.
+                                </p>
+                            </section>
+                        </li>
+
+                        <li>
+                            <section>
+                                <h5>Recommendations Service</h5>
+
+                                <p>
+                                    This service will handle user-specific content recommendations. By taking into
+                                    account user preferences, this service can suggest and compose a certain <i>feed</i>
+                                    tailored for each user. We are considering using a machine learning approach for
+                                    this.
+                                </p>
+                            </section>
+                        </li>
+
+                        <li>
+                            <section>
+                                <h5>Web Crawlers Service</h5>
+
+                                <p>
+                                    This service will handle scraping data from various sources. We are designing this
+                                    service in an extensible way, in order to allow adding various different crawlers
+                                    that can scrape data using custom methods. For example, we can have more
+                                    specialized, RDFa or HTML micro-data crawlers, but also a generic HTML crawler as a
+                                    fallback, and manually/automatically assign a crawler type to each source.
+                                </p>
+                            </section>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Storage</h4>
+
+                    <p>
+                        Our app will store two different types of data - user data (such as authentication information
+                        and preferences) and resource/content data (such as data scraped from websites). For this, we
+                        will use two different storages. The content storage will also be queryable via a
+                        publicly-accessible SPARQL endpoint.
+                    </p>
+                </section>
+            </section>
         </section>
 
         <section>
@@ -177,7 +263,10 @@
                         <h3>Database management system</h3>
                         <ul>
                             <li>
-                                <p>Dynamo DB</p>
+                                <p>Amazon DynamoDB is a NoSQL database that is more suited towards our needs, as it
+                                    allows for a flexible schema which goes hand-in-hand with rapid development. Amazon
+                                    Neptune, a graph database, will also be used to store the content and the
+                                    relationships.</p>
                             </li>
                         </ul>
                     </section>
@@ -197,6 +286,13 @@
                             <li>
                                 <p>Lombok to create the data model classes and then annotate the fields with standard
                                     Java validation annotations (like @NotNull, @Size, etc.) for validation purposes.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    JSON Web Tokens (JWT) to manage access and authorize users across our various web
+                                    pages and APIs, as this eliminates the need to have a centralized database that all
+                                    services need to connect to in order to query user permissions.
                                 </p>
                             </li>
                         </ul>
@@ -222,7 +318,105 @@
 
         <section>
             <h2>Deployment</h2>
+            <p>
+                We will be using the Amazon Web Services (AWS) cloud to deploy and host our application. Deploying
+                directly on the cloud has many advantages, but we are mostly interested in the reduced operational load
+                that this approach provides as opposed to a more DYI model (such as self-hosting). By not having to
+                focus on managing local/self-hosted infrastructure and relying on AWS managed services, we can instead
+                focus on developing the core functionalities of our app. We chose AWS over other cloud providers because
+                we both have some experience using it, and because of the very generous <a href="#aws-free-tier">free
+                    tier</a> it offers.
+            </p>
 
+            <section>
+                <h3>Web Application</h3>
+
+                <p>
+                    For the deployment of the main web application (i.e. the "front-end" and the "Web App" from the
+                    architecture diagram), we will use the <a href="https://aws.amazon.com/elasticbeanstalk/">AWS
+                        Elastic Beanstalk</a> service. This is a service that manages the deployment of both front-end
+                    and back-end code, and automatically handles provisioning capacity, load balancing, scaling and
+                    health monitoring, so that we can focus more on development. Elastic Beanstalk uses other AWS
+                    services such as <a href="https://aws.amazon.com/ec2/">EC2</a> (virtual machines) and <a
+                        href="https://aws.amazon.com/s3/">S3</a> (storage) to handle hosting and storing static content.
+                </p>
+            </section>
+
+            <section>
+                <h3>API Gateways</h3>
+
+                <p>
+                    To manage access to our APIs, we decided to use the <a
+                        href="https://aws.amazon.com/api-gateway/">AWS API Gateway</a> service, which allows for easily
+                    publishing and securing RESTful APIs. The service also handles other important web API
+                    functionalities, such as CORS, throttling, authorization and authentication and monitoring. By using
+                    this service, we can easily control and rate-limit which users have access to our public APIs
+                    (including the SPARQL endpoint).
+                </p>
+            </section>
+
+            <section>
+                <h3>(Micro)Services</h3>
+
+                <p>
+                    For the Authentication and Recommendations services, we will use <a
+                        href="https://aws.amazon.com/lambda/">AWS Lambda</a>. This is a serverless compute service, and
+                    we chose this because serverless code it is easily scalable and extremely cheap. This way, we can
+                    ensure that the application can deal with variable user count/traffic with minimal operational
+                    effort required from us.
+                </p>
+            </section>
+
+            <section>
+                <h3>Web Scraping</h3>
+
+                <p>
+                    In order to handle scraping large amounts of data from various sources, we decided to use <a
+                        href="https://aws.amazon.com/batch/">AWS Batch</a>. As opposed to Lambda functions, AWS Batch
+                    jobs don't have a 15-minute time limit, which makes them the perfect candidate for long-running
+                    tasks such as web scraping. Also, they can easily be configured to be triggered at specific
+                    intervals (such as once per day), similar to a cron job, via <a
+                        href="https://aws.amazon.com/eventbridge/">AWS EventBridge</a>. This will make it easier to keep
+                    the content fresh, while also allowing the possibility of running on-demand.
+                </p>
+            </section>
+
+            <section>
+                <h3>Storage</h3>
+
+                <p>
+                    Our app will store two different types of data - user data (such as authentication information and
+                    preferences) and resource/content data (such as data scraped from websites). For this, we will use
+                    two different types of storage.
+                </p>
+
+                <ol>
+                    <li>
+                        <section>
+                            <h4>User storage</h4>
+                            <p>
+                                For storing user data, we will use <a href="https://aws.amazon.com/dynamodb/">Amazon
+                                    DynamoDB</a>. We chose it because it is a a fully managed, serverless NoSQL database
+                                that has various helpful features such as automatic backups and caching, and is very
+                                cheap, with 25 GB of storage included in the free tier.
+                            </p>
+                        </section>
+                    </li>
+
+                    <li>
+                        <section>
+                            <h4>Content storage</h4>
+                            <p>
+                                Since the scraped content will have to be queryable via SPARQL, it only makes sense for
+                                us to store it into a easy-to-query graph database. This is why we chose <a
+                                    href="https://aws.amazon.com/neptune/">Amazon Neptune</a>, a managed
+                                high-performance graph database that will allow us to store large amounts of scraped
+                                data, along with the relationships between the <i>things</i> we scrape.
+                            </p>
+                        </section>
+                    </li>
+                </ol>
+            </section>
         </section>
 
         <section>
@@ -291,13 +485,24 @@
 
         <section>
             <h2>Data models</h2>
+
+            <p>
+                Our app will handle two main types of data - user data and external resources/content. User data will be
+                mainly composed of authentication info such as e-mails and passwords, but also user-specific
+                preferences. These can range from programming languages to frameworks and platforms, and will be heavily
+                overlapped with the content data. External resources will be composed of data scraped from various
+                websites about web development. We will split this data into different categories, such as tutorials,
+                news, code examples etc. and store various metadata about them, including relationships with other
+                subjects. More info about the data models can be found in our <a href="TODO: ADD ME">OpenAPI
+                    specifications</a>.
+            </p>
         </section>
 
         <section>
             <h2>Linked data principles</h2>
         </section>
 
-        <section>
+        <section typeof="sa:Conclusion" role="doc-conclusion">
             <h2>Conclusion</h2>
             <p>
                 As we conclude our exploration of the multi-device, micro-service-oriented system designed to manage and
@@ -327,6 +532,37 @@
         <section typeof="sa:Bibliography" role="doc-bibliography">
             <h2> References </h2>
             <ol>
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://aws.amazon.com/free/"
+                    property="schema:citation" id="aws-free-tier">
+                    <cite property="schema:name">
+                        <a href="https://aws.amazon.com/free/">AWS Free Tier</a>
+                    </cite>
+
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2023-12-01">01 Dec 2023</time>)
+                    </span>
+                </li>
+                <li typeOf="schema:WebPage" role="doc-biblioentry"
+                    resource="https://aws.amazon.com/blogs/architecture/serverless-architecture-for-a-web-scraping-solution/"
+                    property="schema:citation" id="aws-scraping">
+                    <cite property="schema:name">
+                        <a
+                            href="https://aws.amazon.com/blogs/architecture/serverless-architecture-for-a-web-scraping-solution/">Serverless
+                            Architecture for a Web Scraping Solution</a>
+                    </cite>
+                    by <span property="schema:author" typeof="schema:Person">
+                        <span property="schema:givenName">Dzidas</span>
+                        <span property="schema:familyName">Martinaitis</span>
+                    </span>; published in
+                    <time property="datePublished" datetime="2020-06-23T08:59:01-07:00">23 JUN 2020</time>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2023-12-01">01 Dec 2023</time>)
+                    </span>
+                </li>
             </ol>
         </section>
     </article>
