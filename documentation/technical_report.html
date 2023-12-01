@@ -22,7 +22,18 @@
                                 <meta property="schema:familyName" content="Vatui">
                                 <span property="schema:name"> Vatui Adrian </span>
                             </span>
+
                         </li>
+
+                        <li typeof="sa:ContributorRole" property="schema:author">
+                            <span typeof="schema:Person" resource="https://github.com/rares01">
+                                <meta property="schema:givenName" content="Rares">
+                                <meta property="schema:familyName" content="Gramescu">
+                                <span property="schema:name"> Gramescu Rares </span>
+                            </span>
+
+                        </li>
+
                     </ul>
                 </section>
             </div>
@@ -31,14 +42,87 @@
         <section typeof="sa:Introduction" role="doc-introduction">
             <h2>Introduction</h2>
             <p>
-
+                In the rapidly evolving realm of web development, the abundance and dynamism of technical content
+                present both an opportunity and a challenge. Web developers, ranging from novices to experts, constantly
+                seek up-to-date and relevant resources like tutorials, code examples, news, and event information.
+                However, the vastness of available information, scattered across multiple platforms such as DevDocs,
+                GitHub Pages, MDN Web Docs, Reddit, and others, often leads to information overload. Recognizing this
+                challenge, our project aims to develop a multi-device, service-oriented system that intelligently
+                models and manages this plethora of public technical content.
+                <br>
+                Leveraging the principles of Linked Data, our system not only aggregates content from various sources
+                but also semantically enriches it, thereby enhancing its discoverability and usability. The core of our
+                approach lies in creating a network of interconnected data, which is more meaningful and context-aware
+                compared to the traditional isolated data silos. By utilizing a SPARQL endpoint, we enable both human
+                users and software agents to query and retrieve web development knowledge tailored to specific criteria
+                such as programming languages, frameworks, target platforms, purposes, geographical areas, and time
+                periods. This personalized approach ensures that users receive content that is most relevant to their
+                individual needs and preferences.
+                <br>
+                To further enrich the knowledge base, our system integrates additional insights from authoritative
+                sources like DBpedia and Wikidata. This integration not only broadens the spectrum of available
+                information but also adds layers of credibility and depth to the content.
+                In essence, our project represents a step towards a smarter, more connected, and user-centric approach
+                to managing web development knowledge. It promises to be a valuable tool for the global community of web
+                developers, enabling them to stay abreast of the latest trends, technologies, and best practices in the
+                field.
             </p>
         </section>
 
         <section>
             <h2>Project Scope</h2>
             <p>
-
+                The scope of this project encompasses several key areas, aiming to provide a comprehensive solution to
+                the challenges faced by web developers in accessing, managing, and utilizing technical content. The
+                project's scope can be outlined as follows:
+            <ol>
+                <li>
+                    <section>
+                        <h3>Content Aggregation and Management:</h3>
+                        <p> Aggregating and managing public technical
+                            content from sources like DevDocs, GitHub Pages, MDN Web Docs, Reddit, including tutorials,
+                            source-code examples, news, events, and more.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Personalization and Customization:</h3>
+                        <p> Tailoring content based on criteria such as
+                            programming languages, frameworks, target platforms, user preferences, geographical
+                            locations,
+                            and
+                            time periods.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Integration with DBpedia and Wikidata:</h3>
+                        <p>Enriching the knowledge base by integrating
+                            additional knowledge from DBpedia and Wikidata.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>SPARQL Endpoint for Data Access:</h3>
+                        <p>Providing access to the knowledge base via a
+                            SPARQL endpoint, enabling complex queries and retrieval of specific information.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Multi-Device Accessibility:</h3>
+                        <p> Ensuring seamless access and usability across various
+                            devices including desktops, laptops, tablets, and smartphones.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>User Experience and Interface Design:</h3>
+                        <p> Focusing on creating an intuitive and
+                            user-friendly interface for navigating, searching, and utilizing the content.</p>
+                    </section>
+                </li>
+            </ol>
             </p>
         </section>
 
@@ -54,13 +138,86 @@
             <p>
 
             </p>
+            <ol>
+                <li>
+                    <section>
+                        <h3>Backend technologies</h3>
+                        <ul>
+                            <li>
+                                <p>Java and Spring Boot as the app needs to handle potentially large amounts of data and
+                                    user
+                                    requests, Java's scalability and Spring Boot's efficient resource management ensure
+                                    that our application can grow and perform well under increased loads.</p>
 
-            <section>
-                <h3>Backend technologies</h3>
-                <p>
+                            </li>
+                            <li>
+                                <p>Python as it is known for its simplicity and readability, making it ideal for
+                                    quickly developing web crawling scripts and tools. Also Python offers a wealth of
+                                    libraries such as Beautiful Soup, Scrapy,
+                                    and Requests, which are specifically designed for web scraping and crawling. These
+                                    libraries simplify the extraction and processing of data from web pages.</p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+                <li>
 
-                </p>
-            </section>
+                    <section>
+                        <h3>Frontend technologies</h3>
+                        <ul>
+                            <li>
+                                <p>Angular for user interface</p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+                <li>
+
+                    <section>
+                        <h3>Database management system</h3>
+                        <ul>
+                            <li>
+                                <p>Dynamo DB</p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+
+                <li>
+
+                    <section>
+                        <h3>Security</h3>
+                        <ul>
+                            <li>
+                                <p>Spring security as it provides a wide range of security features, including
+                                    authentication,
+                                    authorization, protection against common vulnerabilities (like CSRF, XSS), and
+                                    session management, crucial for any web application.</p>
+                            </li>
+                            <li>
+                                <p>Lombok to create the data model classes and then annotate the fields with standard
+                                    Java validation annotations (like @NotNull, @Size, etc.) for validation purposes.
+                                </p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+
+                <li>
+
+                    <section>
+                        <h3>Testing</h3>
+                        <ul>
+                            <li>
+                                <p>JUnit</p>
+                            </li>
+                            <li>
+                                <p>Mockito</p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+            </ol>
         </section>
 
         <section>
@@ -70,7 +227,66 @@
 
         <section>
             <h2>Future Enhancements</h2>
+            <ol>
+                <li>
+                    <section>
+                        <h3>Comments on Posts:</h3>
+                        <p>Implementing a feature that allows users to comment on tutorials,
+                            articles, and other shared content. This will facilitate community discussions, provide a
+                            platform for sharing insights, and enable peer-to-peer support and collaboration.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Likes and Reactions:</h3>
+                        <p>
 
+                            Introducing a system for users to express their appreciation or
+                            feedback on posts through likes and various reaction options. This feature will help in
+                            gauging
+                            the
+                            popularity and relevance of the content, as well as encourage more user interaction.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>User-Generated Content Moderation:</h3>
+                        <p>Developing tools and policies for moderating
+                            user-generated content such as comments and posts to ensure a positive and respectful
+                            environment.
+                            This includes implementing automated filters for inappropriate content and providing users
+                            with
+                            the
+                            ability to report concerns.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Personalized Content Recommendations:</h3>
+                        <p>Leveraging user interactions like comments and
+                            likes
+                            to refine the content recommendation algorithms. This will help in delivering more
+                            personalized
+                            and
+                            relevant content to users based on their engagement patterns and preferences.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Notification System:</h3>
+                        <p>Creating a notification system to alert users about new comments,
+                            reactions, and updates on the content they follow or contribute to, enhancing user
+                            engagement
+                            and
+                            retention.
+                        </p>
+                    </section>
+                </li>
+            </ol>
         </section>
 
         <section>
@@ -83,7 +299,29 @@
 
         <section>
             <h2>Conclusion</h2>
-
+            <p>
+                As we conclude our exploration of the multi-device, micro-service-oriented system designed to manage and
+                model public technical content for web development, it is clear that this project stands at the
+                confluence of innovation, usability, and community engagement. Our system not only addresses the current
+                needs of web developers for a centralized, intelligent, and easily accessible knowledge base but also
+                paves the way for future advancements in how technical content is consumed and interacted with.
+                <br>
+                By aggregating diverse resources from platforms like DevDocs, GitHub Pages, MDN Web Docs, and Reddit,
+                and enriching them through Linked Data principles, we have laid the groundwork for a more interconnected
+                and context-aware learning environment. The incorporation of user-customizable features, including
+                personalized content filters based on various criteria, ensures that our system remains relevant and
+                valuable to a broad spectrum of users, from beginners to seasoned professionals.
+                <br>
+                Looking ahead, the planned enhancements such as user comments, likes, and a robust moderation system
+                will transform our platform into a dynamic and interactive community hub. This evolution will foster a
+                more engaged and collaborative space, where knowledge sharing and peer-to-peer learning are not just
+                facilitated but actively encouraged.
+                <br>
+                In essence, our project is more than just a content management system; it is a testament to the
+                ever-evolving landscape of web development and the relentless pursuit of innovation that defines this
+                field. We believe that our system will make a significant contribution to the way web developers access,
+                share, and grow their knowledge, ultimately enriching the entire web development community.
+            </p>
         </section>
 
         <section typeof="sa:Bibliography" role="doc-bibliography">
