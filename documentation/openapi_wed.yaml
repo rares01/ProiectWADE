@@ -1,0 +1,477 @@
+openapi: 3.0.0
+info:
+  title: WED REST API
+  version: 1.0.0
+
+paths:
+
+  /register:
+    post:
+      summary: Register a new user
+      description: This endpoint registers a new user with email, password, and confirm password.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid input
+  
+  /login:
+    post:
+      summary: Login a user
+      description: This endpoint authenticates a user using email and password.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Auth token
+        '401':
+          description: Authentication failed 
+
+   # Preferences Controller Paths
+  /preferences:
+    get:
+      summary: Get User Preferences
+      description: Retrieve the current preferences set by the user.
+      tags:
+        - Preferences
+      responses:
+        '200':
+          description: Successfully retrieved user preferences.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserPreferencesView'
+        '404':
+          description: User preferences not found.
+
+    patch:
+      summary: Update User Preferences
+      description: Update the user's preferences.
+      tags:
+        - Preferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserPreferencesView'
+      responses:
+        '200':
+          description: Successfully updated user preferences.
+        '400':
+          description: Invalid input.
+
+    post:
+      summary: Create User Preferences
+      description: Createe a list of user preferences.
+      tags:
+        - Preferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserPreferences'
+      responses:
+        '201':
+          description: User preferences created successfully.
+        '400':
+          description: Invalid input.
+
+    delete:
+      summary: Delete User Preferences
+      description: Delete the user's current preferences.
+      tags:
+        - Preferences
+      responses:
+        '204':
+          description: Successfully deleted user preferences.
+        '404':
+          description: User preferences not found.
+
+  /sparql:
+    post:
+      summary: Execute SPARQL Query
+      description: Executes a SPARQL query for advanced data retrieval.
+      tags:
+        - SPARQL Endpoint
+      requestBody:
+        required: true
+        content:
+          application/sparql-query:
+            schema:
+              type: string
+              description: SPARQL query string
+      responses:
+        '200':
+          description: Query executed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Results of the SPARQL query
+        '400':
+          description: Invalid SPARQL query
+        '500':
+          description: Server error during query execution        
+
+  /content:
+    get:
+      summary: Retrieve content
+      description: Retrieve content based on various filters like topic, platform, and time period.
+      tags:
+        - Content Management
+      parameters:
+        - in: query
+          name: topic
+          
+          schema:
+            type: array
+            items: 
+              type: string
+          description: Filter by topic
+        - in: query
+          name: platform
+          schema:
+            type: array
+            items: 
+              type: string
+          description: Filter by platform
+        - in: query
+          name: timePeriod
+          schema:
+            type: array
+            items: 
+              type: string
+          description: Filter by time period
+        - in: query
+          name: programmingLanguage
+          schema:
+            type: array
+            items: 
+              type: string
+          description: Filter by programming language        
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number of the content
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            default: 10
+          description: Number of items per page  
+      responses:
+        '200':
+          description: Content retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContentItem'
+
+    post:
+      summary: Add new content
+      description: Add new content to the platform.
+      tags:
+        - Content Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewContentItem'
+      responses:
+        '201':
+          description: New content added successfully
+        '400':
+          description: Invalid input
+
+    delete:
+      summary: Delete all content
+      description: Delete all content items from the platform.
+      tags:
+        - Content Management
+      responses:
+        '204':
+          description: All content items deleted successfully
+
+  /content/{id}:
+    get:
+      summary: Retrieve a specific content item
+      description: Retrieve a specific content item by its unique identifier.
+      tags:
+        - Content Management
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the content item
+      responses:
+        '200':
+          description: Content item retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentItem'
+        '404':
+          description: Content item not found  
+
+    delete:
+      summary: Delete a specific content item
+      description: Delete a specific content item by its unique identifier.
+      tags:
+        - Content Management
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the content item
+      responses:
+        '204':
+          description: Content item deleted successfully
+        '404':
+          description: Content item not found
+
+    patch:
+      summary: Update a specific content item
+      description: Update a content item by its unique identifier.
+      tags:
+        - Content Management
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the content item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContentItem'
+      responses:
+        '200':
+          description: Content item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentItem'
+        '400':
+          description: Invalid input
+        '404':
+          description: Content item not found
+  /crawl:
+    post:
+      summary: Trigger website crawling
+      tags: 
+        - Scraper
+      description: Triggers the crawling process without any input parameters, but always returns an error.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrawlDto'
+      responses:
+        '200':
+          description: Crawling initiated successfully.
+        '500':
+          description: Internal server error occurred during crawling.
+          
+components:
+  schemas:
+    UserRegistration:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          pattern: "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+        confirmPassword:
+          type: string
+          format: password
+          pattern: "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+      required:
+        - email
+        - password
+        - confirmPassword
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+      required:
+        - email
+        - password
+    UserPreferences:
+      type: object
+      properties:
+        preferenceType:
+          type: string
+          enum:
+            - programmingLanguage
+            - framework
+            - topic
+            - platform
+            - geographicalArea
+            - timePeriod
+          description: The type of preference.
+        value:
+          type: string
+          description: The value corresponding to the selected preference type.
+      required:
+        - preferenceType
+        - value
+    UserPreferencesView:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user preference
+        preferenceType:
+          type: string
+          enum:
+            - programmingLanguage
+            - framework
+            - topic
+            - platform
+            - geographicalArea
+            - timePeriod
+          description: The type of preference.
+        value:
+          type: string
+          description: The value corresponding to the selected preference type.
+      required:
+        - preferenceType
+        - value
+    ContentItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the content item
+        title:
+          type: string
+          description: Title of the content
+        description:
+          type: string
+          description: Brief description of the content
+        hyperlink:
+          type: string
+          description: Link to the original content
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserPreferences'
+        verified:
+          type: boolean
+          description: If the content is verified
+      
+    NewContentItem:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the new content
+        description:
+          type: string
+          description: Brief description of the new content
+        hyperlink:
+          type: string
+          description: Link to the original content
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserPreferences'
+      required:
+        - title
+        - description
+        - hyperlink
+    
+    UpdateContentItem:
+      type: object
+      properties:
+        # Properties for updating content. Exclude 'id' if it shouldn't be changed.
+        title:
+          type: string
+          description: Title of the content
+        description:
+          type: string
+          description: Brief description of the content
+        topic:
+          type: string
+          description: Topic of the content
+        platform:
+          type: string
+          description: Platform where the content is published
+        timePeriod:
+          type: string
+          description: Publication time period of the content
+      required:
+         - title
+         - description
+         - hyperlink
+         - 
+    CrawlDto:
+      type: object
+      properties:
+        hyperlink: 
+          type: string
+          description: 
+        crawlerType:
+          type: string
+          enum: 
+            - RDFa
+            - HTML
+            - HTML microdata
+            - JSON-LD
+
+
+
+      
+
