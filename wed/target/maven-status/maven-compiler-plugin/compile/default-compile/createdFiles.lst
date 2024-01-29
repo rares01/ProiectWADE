@@ -1,9 +1,0 @@
-com\wed\entity\Customer.class
-com\wed\config\SpringFoxConfig.class
-com\wed\service\CustomerService.class
-com\wed\controller\AuthenticationController.class
-com\wed\repository\CustomerRepository.class
-com\wed\config\SecurityConfiguration.class
-com\wed\config\CORSConfigurationLocal.class
-com\wed\WedApplication.class
-com\wed\config\DynamoDBConfig.class
