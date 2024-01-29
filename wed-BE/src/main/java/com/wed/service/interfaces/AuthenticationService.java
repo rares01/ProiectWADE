@@ -1,10 +1,16 @@
 package com.wed.service.interfaces;
 
-import com.wed.dto.LoginRequestDTO;
-import com.wed.dto.LoginResponseDTO;
+import com.wed.dto.LoginRequestDto;
+import com.wed.dto.LoginResponseDto;
+import com.wed.dto.RegisterUserDto;
+import com.wed.exception.DtoValidateAlreadyExistsException;
+import com.wed.exception.DtoValidateException;
 import com.wed.exception.InvalidRoleException;
 
 public interface AuthenticationService {
 
-    LoginResponseDTO authenticateByRole(LoginRequestDTO loginRequestDTO) throws InvalidRoleException;
+    LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) throws InvalidRoleException;
+
+    void save(RegisterUserDto registerUserDto)
+            throws DtoValidateException, DtoValidateAlreadyExistsException;
 }

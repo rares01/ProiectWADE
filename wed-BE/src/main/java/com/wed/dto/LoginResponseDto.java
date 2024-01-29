@@ -3,5 +3,5 @@ package com.wed.dto;
 import lombok.Builder;
 
 @Builder
-public record LoginResponseDTO(String token) {
+public record LoginResponseDto(String token) {
 }

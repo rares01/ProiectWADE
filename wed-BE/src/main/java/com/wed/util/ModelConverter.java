@@ -1,7 +1,9 @@
 package com.wed.util;
 
-import com.wed.entity.RegisterUserDto;
+import com.wed.dto.RegisterUserDto;
 import com.wed.entity.User;
+
+import java.util.UUID;
 
 public class ModelConverter {
 

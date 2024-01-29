@@ -1,4 +1,4 @@
-package com.wed.entity;
+package com.wed.dto;
 
 import lombok.Builder;
 

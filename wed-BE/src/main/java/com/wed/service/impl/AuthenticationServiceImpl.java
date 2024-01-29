@@ -1,9 +1,9 @@
 package com.wed.service.impl;
 
 import com.wed.authentication.JwtUtil;
-import com.wed.dto.LoginRequestDTO;
-import com.wed.dto.LoginResponseDTO;
-import com.wed.entity.RegisterUserDto;
+import com.wed.dto.LoginRequestDto;
+import com.wed.dto.LoginResponseDto;
+import com.wed.dto.RegisterUserDto;
 import com.wed.entity.User;
 import com.wed.exception.AuthenticationLoginException;
 import com.wed.exception.DtoValidateAlreadyExistsException;
@@ -40,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public LoginResponseDTO authenticateByRole(LoginRequestDTO loginRequestDTO) throws InvalidRoleException {
+    public LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) throws InvalidRoleException {
         final User userDetails = (User) userDetailsService.loadUserByUsername(loginRequestDTO.username());
         boolean isRoleValid = userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals(loginRequestDTO.role()));
@@ -51,12 +51,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Map<String, Object> extraClaims = setClaims(userDetails);
         String token = jwtUtil.generateToken(extraClaims, userDetails);
 
-        return LoginResponseDTO.builder()
+        return LoginResponseDto.builder()
                 .token(token)
                 .build();
 
     }
 
+    @Override
     public void save(RegisterUserDto registerUserDto)
             throws DtoValidateException, DtoValidateAlreadyExistsException {
         Optional<User> user = userService.findByUsername(registerUserDto.email());
@@ -69,7 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
 
-    private void authenticate(LoginRequestDTO loginRequestDTO) throws AuthenticationLoginException {
+    private void authenticate(LoginRequestDto loginRequestDTO) throws AuthenticationLoginException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.username(), loginRequestDTO.password()));
         } catch (DisabledException e) {
@@ -82,7 +83,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public static Map<String, Object> setClaims(User userDetails) {
         Map<String, Object> extraClaims = new HashMap<>();
 
-        extraClaims.put("userId", userDetails.getId());
         extraClaims.put("username", userDetails.getUsername());
         extraClaims.put("role", userDetails.getRole());
 

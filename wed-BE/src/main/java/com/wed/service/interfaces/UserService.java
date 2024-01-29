@@ -1,6 +1,6 @@
 package com.wed.service.interfaces;
 
-import com.wed.entity.RegisterUserDto;
+import com.wed.dto.RegisterUserDto;
 import com.wed.entity.User;
 import com.wed.exception.DtoValidateException;
 

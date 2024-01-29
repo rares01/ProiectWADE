@@ -51,7 +51,8 @@ public class DynamoDBConfig {
     @Bean
     CommandLineRunner createDynamoDBTables(AmazonDynamoDB amazonDynamoDB) {
         return args -> {
-            String tableName = "Customer";
+
+            String tableName = "User";
 
             ListTablesResult listTablesResult = amazonDynamoDB.listTables();
             List<String> tableNames = listTablesResult.getTableNames();
@@ -59,19 +60,16 @@ public class DynamoDBConfig {
             if (!tableNames.contains(tableName)) {
                 CreateTableRequest request = new CreateTableRequest()
                         .withTableName(tableName)
-                        .withKeySchema(new KeySchemaElement("CustomerID", KeyType.HASH)) // Partition key
+                        .withKeySchema(new KeySchemaElement("Username", KeyType.HASH))
                         .withAttributeDefinitions(
-                                new AttributeDefinition("CustomerID", ScalarAttributeType.S) // String type attribute
+                                new AttributeDefinition("Username", ScalarAttributeType.S)
                         )
-                        .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L)); // Read and write capacity
-
+                        .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
                 amazonDynamoDB.createTable(request);
-                System.out.println("Table 'customer' created successfully!");
-
             } else {
-                System.out.println("Table 'customer' already exists.");
+                System.out.println("Table 'user' already exists.");
             }
+
         };
     }
-
 }
