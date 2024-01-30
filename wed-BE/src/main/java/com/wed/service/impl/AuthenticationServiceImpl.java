@@ -40,14 +40,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) throws InvalidRoleException {
+    public LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) {
         final User userDetails = (User) userDetailsService.loadUserByUsername(loginRequestDTO.username());
-        boolean isRoleValid = userDetails.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals(loginRequestDTO.role()));
-
-        if (!isRoleValid) {
-            throw new InvalidRoleException("Unexpected role");
-        }
         Map<String, Object> extraClaims = setClaims(userDetails);
         String token = jwtUtil.generateToken(extraClaims, userDetails);
 
