@@ -2,8 +2,11 @@ package com.wed.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 import com.wed.entity.User;
 import org.apache.commons.lang3.StringUtils;
@@ -39,30 +42,34 @@ public class DynamoDBConfig {
 
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
-        AmazonDynamoDB amazonDynamoDB
-                = new AmazonDynamoDBClient(amazonAWSCredentials());
+//        AmazonDynamoDB amazonDynamoDB
+//                = new AmazonDynamoDBClient(amazonAWSCredentials());
+//
+//        if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
+//            amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
+//        }
 
-        if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
-            amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
-        }
-
-        return amazonDynamoDB;
+        return AmazonDynamoDBClientBuilder.standard().withRegion(Regions.EU_WEST_1).build();
     }
 
-    @Bean
-    public AWSCredentials amazonAWSCredentials() {
-        return new BasicAWSCredentials(
-                amazonAWSAccessKey, amazonAWSSecretKey);
-    }
+//    @Bean
+//    public AWSCredentials amazonAWSCredentials() {
+//        return new BasicAWSCredentials(
+//                amazonAWSAccessKey, amazonAWSSecretKey);
+//    }
 
     @Bean
     CommandLineRunner createDynamoDBTables() {
         return args -> {
-            DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(DynamoDbClient.builder()
-                    .credentialsProvider(StaticCredentialsProvider.create(
-                            AwsBasicCredentials.create(amazonAWSAccessKey, amazonAWSSecretKey)))
-                    .endpointOverride(URI.create(amazonDynamoDBEndpoint))
-                    .build()).build();
+//            DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(DynamoDbClient.builder()
+//                    .credentialsProvider(StaticCredentialsProvider.create(
+//                            AwsBasicCredentials.create(amazonAWSAccessKey, amazonAWSSecretKey)))
+//                    .endpointOverride(URI.create(amazonDynamoDBEndpoint))
+//                    .build()).build();
+
+            var enhancedClient = DynamoDbEnhancedClient.builder()
+                    .dynamoDbClient(DynamoDbClient.builder().region(Region.EU_WEST_1).build())
+                    .build();
 
             createTable(enhancedClient, User.class);
         };

@@ -1,5 +1,4 @@
 export const environment = {
     production: true,
-    apiPath: '/api', //TODO replace this when deployed
-
+    apiPath: 'http://wed-application.eu-west-1.elasticbeanstalk.com/api',
 };
