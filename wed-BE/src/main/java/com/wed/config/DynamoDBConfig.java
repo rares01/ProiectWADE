@@ -4,7 +4,8 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.model.*;
+import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
+import com.wed.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +15,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.stereotype.Repository;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-import java.util.List;
+import java.net.URI;
 
 @Configuration
 @EnableDynamoDBRepositories(basePackages = "com.wed.repository",
@@ -49,27 +56,22 @@ public class DynamoDBConfig {
     }
 
     @Bean
-    CommandLineRunner createDynamoDBTables(AmazonDynamoDB amazonDynamoDB) {
+    CommandLineRunner createDynamoDBTables() {
         return args -> {
+            DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(DynamoDbClient.builder()
+                    .credentialsProvider(StaticCredentialsProvider.create(
+                            AwsBasicCredentials.create(amazonAWSAccessKey, amazonAWSSecretKey)))
+                    .endpointOverride(URI.create(amazonDynamoDBEndpoint))
+                    .build()).build();
 
-            String tableName = "User";
-
-            ListTablesResult listTablesResult = amazonDynamoDB.listTables();
-            List<String> tableNames = listTablesResult.getTableNames();
-
-            if (!tableNames.contains(tableName)) {
-                CreateTableRequest request = new CreateTableRequest()
-                        .withTableName(tableName)
-                        .withKeySchema(new KeySchemaElement("Username", KeyType.HASH))
-                        .withAttributeDefinitions(
-                                new AttributeDefinition("Username", ScalarAttributeType.S)
-                        )
-                        .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
-                amazonDynamoDB.createTable(request);
-            } else {
-                System.out.println("Table 'user' already exists.");
-            }
-
+            createTable(enhancedClient, User.class);
         };
+    }
+
+    private <T> void createTable(DynamoDbEnhancedClient enhancedClient, Class<T> modelClass) {
+        DynamoDbTable<T> table = enhancedClient.table(modelClass.getSimpleName(), TableSchema.fromBean(modelClass));
+        try {
+            table.createTable();
+        } catch (ResourceInUseException ignored) { }
     }
 }

@@ -1,17 +1,22 @@
 package com.wed.entity;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.UUID;
 
 @Data
 @Getter
@@ -19,28 +24,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@DynamoDbBean
 @DynamoDBTable(tableName = "User")
 public class User implements UserDetails {
 
+    @Getter(onMethod = @__({@DynamoDbPartitionKey, @DynamoDBHashKey}))
     private String username;
     private String password;
     private String role;
-
-    @DynamoDBHashKey(attributeName = "Username")
-    public String getUsername() {
-        return username;
-    }
-
-    @DynamoDBAttribute(attributeName = "Password")
-    public String getPassword() {
-        return password;
-    }
-
-    @DynamoDBAttribute(attributeName = "Role")
-    public String getRole() {
-        return role;
-    }
-
     @Override
     @DynamoDBIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
