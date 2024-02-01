@@ -41,7 +41,7 @@ export class AuthService {
     registeruser: RegisterUser
   ): Observable<RegisterUser> {
 
-    const url = `${environment.apiPath}/authenticate/login`;
+    const url = `${environment.apiPath}/authenticate/register`;
     return this.http.post<RegisterUser>(
       url, registeruser, { headers: this.httpHeaders }
     );
