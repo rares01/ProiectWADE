@@ -13,7 +13,7 @@ public class CORSConfigurationLocal implements WebMvcConfigurer {
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-                .allowedOrigins("http://localhost:4200", "http://localhost:4201")
+                .allowedOrigins("http://localhost:4200", "http://localhost:4201", "http://wed-fe.s3-website-eu-west-1.amazonaws.com")
                 .exposedHeaders("Set-Cookie")
                 .allowCredentials(true)
                 .allowedHeaders("*");
