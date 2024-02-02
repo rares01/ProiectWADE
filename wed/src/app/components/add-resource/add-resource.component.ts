@@ -73,7 +73,13 @@ export class AddResourceComponent implements OnInit {
       antarctica: ['', []],
       northAm: ['', []],
       southAm: ['', []],
-      framework: ['', []],
+      //FRAMEWORKS
+      spring: ['', []],
+      net: ['', []],
+      rails: ['', []],
+      django: ['', []],
+      flask: ['', []],
+      nest: ['', []],
       hyperlink: ['', [Validators.required]]
     })
   }
