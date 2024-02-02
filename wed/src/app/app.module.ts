@@ -16,13 +16,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { PreferencesPopupComponent } from './components/preferences-popup/preferences-popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AddResourceComponent } from './components/add-resource/add-resource.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PreferencesPopupComponent,
+    AddResourceComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +45,11 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     MatIconModule,
     ReactiveFormsModule,
     MatOptionModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule 
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
