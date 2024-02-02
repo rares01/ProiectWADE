@@ -17,6 +17,7 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Data
 @Getter
@@ -32,6 +33,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String role;
+    private Set<Preferences> preferences;
     @Override
     @DynamoDBIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

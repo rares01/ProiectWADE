@@ -8,6 +8,8 @@ import com.wed.service.interfaces.UserService;
 import com.wed.util.ModelConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+    public void saveUserPreferences() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+    }
     private User validator(RegisterUserDto registerUserDto) throws DtoValidateException {
         if (StringUtils.isBlank(registerUserDto.email())) {
             throw new DtoValidateException("Test");
