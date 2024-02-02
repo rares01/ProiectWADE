@@ -4,7 +4,7 @@
 
         <div class="form-prefrences">
 
-            <div>
+            <div class="data">
                 <p> Choose prefered soruces</p>
                 <div>
                     <mat-checkbox formControlName="tutorials" class="example-margin">Tutorials</mat-checkbox>
@@ -14,7 +14,7 @@
 
                 </div>
             </div>
-            <div>
+            <div class="data">
                 <p> Choose prefered topics</p>
                 <div>
                     <mat-checkbox formControlName="backend" class="example-margin">Backend</mat-checkbox>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <ng-container *ngIf="verifyBackend()">
-                <div>
+                <div class="data">
                     <p> Choose prefered language for backend</p>
                     <div>
                         <mat-checkbox formControlName="java" class="example-margin">Java</mat-checkbox>
@@ -37,7 +37,7 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="verifyFrontend()">
-                <div>
+                <div class="data">
                     <p> Choose prefered frameworks for frontend</p>
                     <div>
                         <mat-checkbox formControlName="angular" class="example-margin">Angular</mat-checkbox>
@@ -50,7 +50,7 @@
             </ng-container>
 
             <ng-container *ngIf="verifyMobile()">
-                <div>
+                <div class="data">
                     <p> Choose prefered frameworks for mobile</p>
                     <div>
                         <mat-checkbox formControlName="reactNat" class="example-margin">React Native</mat-checkbox>
@@ -63,7 +63,7 @@
                 </div>
             </ng-container>
 
-            <div>
+            <div class="data">
                 <p> Choose prefered target platforms</p>
                 <div>
                     <mat-checkbox formControlName="linux" class="example-margin">Linux</mat-checkbox>
@@ -72,7 +72,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="data">
                 <p> Choose prefered geographical areas</p>
                 <div>
                     <mat-checkbox formControlName="europe" class="example-margin">Europe</mat-checkbox>
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="data">
                 <p> Choose prefered frameworks</p>
                 <div>
                     <mat-checkbox formControlName="spring" class="example-margin">Spring</mat-checkbox>

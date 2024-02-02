@@ -3,6 +3,7 @@ package com.wed.controller;
 import com.wed.dto.LoginRequestDto;
 import com.wed.dto.LoginResponseDto;
 import com.wed.dto.RegisterUserDto;
+import com.wed.exception.AuthenticationLoginException;
 import com.wed.exception.DtoValidateAlreadyExistsException;
 import com.wed.exception.DtoValidateException;
 import com.wed.exception.InvalidRoleException;
@@ -28,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDTO) throws InvalidRoleException {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDTO) throws InvalidRoleException, AuthenticationLoginException {
         LoginResponseDto loginResponseDTO = authenticationService.authenticateByRole(loginRequestDTO);
         return ResponseEntity.ok(loginResponseDTO);
     }

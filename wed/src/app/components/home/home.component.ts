@@ -16,15 +16,15 @@ export class HomeComponent implements OnInit {
     this.openDialogPreferences();
   }
   openDialogPreferences(): void {
-    const dialogRef = this.dialogService.open(PreferencesPopupComponent, { width: '60%', height: '50%', disableClose: true });
+    const dialogRef = this.dialogService.open(PreferencesPopupComponent, { width: '60%', height: '55%', disableClose: true });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result =>  {
       console.log('The dialog was closed');
     });
   }
 
   openDialogResource(): void {
-    const dialogRef = this.dialogService.open(AddResourceComponent, { width: '60%', height: '65%' });
+    const dialogRef = this.dialogService.open(AddResourceComponent, { width: '60%', height: '73%' });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './add-resource.component.html',
   styleUrls: ['./add-resource.component.scss']
 })
-export class AddResourceComponent implements OnInit{
+export class AddResourceComponent implements OnInit {
 
   public addResourceForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
@@ -17,33 +17,62 @@ export class AddResourceComponent implements OnInit{
   ngOnInit(): void {
     this.initForm();
   }
-  
+
   public saveResource() {
     this.dialogRef.close();
   }
 
   public verifyBackend() {
-    return  this.addResourceForm.controls['topic'].value === 'backend';
+    return this.addResourceForm.controls['backend'].value;
   }
 
   public verifyFrontend() {
-    return  this.addResourceForm.controls['topic'].value === 'frontend'; 
+    return this.addResourceForm.controls['frontend'].value;
   }
 
   public verifyMobile() {
-    return  this.addResourceForm.controls['topic'].value === 'mobile'; 
+    return this.addResourceForm.controls['mobile'].value;
   }
 
   private initForm(): void {
     this.addResourceForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       source: ['tutorials', []],
-      topic: ['', []],
+      //TARGET
       backend: ['', []],
       frontend: ['', []],
       mobile: ['', []],
-      platform: ['', []],
-      area: ['', []],
+      //BE
+      java: ['', []],
+      cpp: ['', []],
+      cs: ['', []],
+      python: ['', []],
+      ruby: ['', []],
+      node: ['', []],
+      //FE
+      angular: ['', []],
+      react: ['', []],
+      vue: ['', []],
+      razor: ['', []],
+      next: ['', []],
+      //MOBILE
+      reactNat: ['', []],
+      swift: ['', []],
+      objective: ['', []],
+      kotlin: ['', []],
+      flutter: ['', []],
+      //OS
+      linux: ['', []],
+      macox: ['', []],
+      windows: ['', []],
+      //GEO
+      europe: ['', []],
+      africa: ['', []],
+      australia: ['', []],
+      asia: ['', []],
+      antarctica: ['', []],
+      northAm: ['', []],
+      southAm: ['', []],
       framework: ['', []],
       hyperlink: ['', [Validators.required]]
     })

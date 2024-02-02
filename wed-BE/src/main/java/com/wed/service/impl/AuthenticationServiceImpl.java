@@ -8,7 +8,6 @@ import com.wed.entity.User;
 import com.wed.exception.AuthenticationLoginException;
 import com.wed.exception.DtoValidateAlreadyExistsException;
 import com.wed.exception.DtoValidateException;
-import com.wed.exception.InvalidRoleException;
 import com.wed.service.interfaces.AuthenticationService;
 import com.wed.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) {
+    public LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) throws AuthenticationLoginException {
+        authenticate(loginRequestDTO);
         final User userDetails = (User) userDetailsService.loadUserByUsername(loginRequestDTO.username());
         Map<String, Object> extraClaims = setClaims(userDetails);
         String token = jwtUtil.generateToken(extraClaims, userDetails);
@@ -56,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throws DtoValidateException, DtoValidateAlreadyExistsException {
         Optional<User> user = userService.findByUsername(registerUserDto.email());
 
-        if (user.isPresent()) {
+            if (user.isPresent()) {
             throw new DtoValidateAlreadyExistsException("Test");
         }
 
