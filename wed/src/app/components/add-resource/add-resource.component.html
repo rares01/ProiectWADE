@@ -1,0 +1,100 @@
+<div>
+    <p class="ptitle"> Add a new resource!</p>
+    <form [formGroup]="addResourceForm">
+        <div class="form-prefrences">
+            <mat-form-field class="input-title">
+                <input matInput formControlName="title" placeholder="Title of a resoruce">
+            </mat-form-field>
+
+            <div class="data">
+                <p>Choose the source type</p>
+                <mat-radio-group formControlName="source">
+                    <mat-radio-button value="tutorials" class="example-margin">Tutorials</mat-radio-button>
+                    <mat-radio-button value="presentations" class="example-margin">Presentations</mat-radio-button>
+                    <mat-radio-button value="source" class="example-margin">Source code</mat-radio-button>
+                    <mat-radio-button value="events" class="example-margin">Events</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="data">
+                <p>Choose the topic</p>
+                <mat-checkbox formControlName="backend" class="example-margin">Backend</mat-checkbox>
+                <mat-checkbox formControlName="frontend" class="example-margin">Frontend</mat-checkbox>
+                <mat-checkbox formControlName="mobile" class="example-margin">Mobile</mat-checkbox>
+            </div>
+
+            <ng-container *ngIf="verifyBackend()">
+                <div class="data">
+                    <p>Choose the language for backend</p>
+                    <mat-checkbox formControlName="java" class="example-margin">Java</mat-checkbox>
+                    <mat-checkbox formControlName="cpp" class="example-margin">C++</mat-checkbox>
+                    <mat-checkbox formControlName="cs" class="example-margin">C#</mat-checkbox>
+                    <mat-checkbox formControlName="python" class="example-margin">Python</mat-checkbox>
+                    <mat-checkbox formControlName="ruby" class="example-margin">Ruby</mat-checkbox>
+                    <mat-checkbox formControlName="node" class="example-margin">Node.js</mat-checkbox>
+                </div>
+            </ng-container>
+
+
+            <ng-container *ngIf="verifyFrontend()">
+                <div class="data">
+                    <p>Choose the framework for frontend</p>
+                    <mat-checkbox formControlName="angular" class="example-margin">Angular</mat-checkbox>
+                    <mat-checkbox formControlName="react" class="example-margin">React</mat-checkbox>
+                    <mat-checkbox formControlName="vue" class="example-margin">Vue</mat-checkbox>
+                    <mat-checkbox formControlName="razor" class="example-margin">Razor</mat-checkbox>
+                    <mat-checkbox formControlName="next" class="example-margin">Next.js</mat-checkbox>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="verifyMobile()">
+                <div class="data">
+                    <p>Choose the framework for mobile</p>
+                    <mat-radio-group formControlName="mobile" class="example-margin">
+                        <mat-radio-button value="reactNat" class="example-margin">React Native</mat-radio-button>
+                        <mat-radio-button value="swift" class="example-margin">Swift</mat-radio-button>
+                        <mat-radio-button value="objective" class="example-margin">Objective-C</mat-radio-button>
+                        <mat-radio-button value="kotlin" class="example-margin">Kotlin</mat-radio-button>
+                        <mat-radio-button value="flutter" class="example-margin">Flutter</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </ng-container>
+
+            <div class="data">
+                <p>Choose the target platform</p>
+                <mat-checkbox formControlName="linux" class="example-margin">Linux</mat-checkbox>
+                <mat-checkbox formControlName="macox" class="example-margin">MacOs</mat-checkbox>
+                <mat-checkbox formControlName="windows" class="example-margin">Windows</mat-checkbox>
+            </div>
+
+            <div class="data">
+                <p>Choose the geographical area</p>
+                    <mat-checkbox formControlName="europe" class="example-margin">Europe</mat-checkbox>
+                    <mat-checkbox formControlName="africa" class="example-margin">Africa</mat-checkbox>
+                    <mat-checkbox formControlName="australia" class="example-margin">Australia</mat-checkbox>
+                    <mat-checkbox formControlName="asia" class="example-margin">Asia</mat-checkbox>
+                    <mat-checkbox formControlName="antarctica" class="example-margin">Antarctica</mat-checkbox>
+                    <mat-checkbox formControlName="northAm" class="example-margin">North America</mat-checkbox>
+                    <mat-checkbox formControlName="southAm" class="example-margin">South America</mat-checkbox>
+            </div>
+
+            <div class="data">
+                <p>Choose the framework</p>
+                <mat-checkbox formControlName="spring" class="example-margin">Spring</mat-checkbox>
+                <mat-checkbox formControlName="net" class="example-margin">.NET</mat-checkbox>
+                <mat-checkbox formControlName="rails" class="example-margin">RubyOnRais</mat-checkbox>
+                <mat-checkbox formControlName="django" class="example-margin">Django</mat-checkbox>
+                <mat-checkbox formControlName="flask" class="example-margin">Flask</mat-checkbox>
+                <mat-checkbox formControlName="nest" class="example-margin">Nest.js</mat-checkbox>
+            </div>
+
+            <mat-form-field class="input-hyperlink">
+                <input matInput formControlName="hyperlink" placeholder="Link to resource">
+            </mat-form-field>
+        </div>
+    </form>
+    <div class="btn">
+        <button mat-stroked-button color="accent" class="btn-block" (click)="saveResource()">Add resource</button>
+    </div>
+
+</div>
