@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddResourceComponent } from './components/add-resource/add-resource.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { SparkqlPageComponent } from './components/sparkql-page/sparkql-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatRadioModule } from '@angular/material/radio';
     LoginComponent,
     RegisterComponent,
     PreferencesPopupComponent,
-    AddResourceComponent
+    AddResourceComponent,
+    SparkqlPageComponent
   ],
   imports: [
     BrowserModule,

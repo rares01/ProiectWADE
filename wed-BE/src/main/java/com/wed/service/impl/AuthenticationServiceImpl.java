@@ -31,12 +31,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserService userService;
 
-
     @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
 
     @Override
     public LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) throws AuthenticationLoginException {
@@ -79,6 +79,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         extraClaims.put("username", userDetails.getUsername());
         extraClaims.put("role", userDetails.getRole());
+        extraClaims.put("firstLogin", userDetails.getFirstLogin());
 
         return extraClaims;
     }

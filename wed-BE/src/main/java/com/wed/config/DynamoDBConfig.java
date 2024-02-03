@@ -50,6 +50,7 @@ public class DynamoDBConfig {
 //        }
 
         return AmazonDynamoDBClientBuilder.standard().withRegion(Regions.EU_WEST_1).build();
+//        return amazonDynamoDB;
     }
 
 //    @Bean

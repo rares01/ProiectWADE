@@ -97,7 +97,12 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>6.1.2</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.12.629</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

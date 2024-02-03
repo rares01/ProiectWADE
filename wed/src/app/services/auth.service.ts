@@ -37,6 +37,13 @@ export class AuthService {
     return this.checkIfTokenExists();
   }
 
+  public get isFirstLogin(): boolean | null {
+    if (this.token != null) {
+      return this.token.firstLogin;
+    }
+    return null;
+  }
+
   public register(
     registeruser: RegisterUser
   ): Observable<RegisterUser> {
@@ -80,7 +87,7 @@ export class AuthService {
     localStorage.removeItem('JWT_TOKEN');
   }
 
-  private setSession(authResult: string): void {
+  public setSession(authResult: string): void {
     this.decodeToken(authResult);
 
     if (!this.decodedToken) {

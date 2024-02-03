@@ -3,6 +3,8 @@ package com.wed.entity;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.wed.util.PreferencesConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +19,8 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
+
 
 @Data
 @Getter
@@ -33,7 +36,10 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String role;
-    private Set<Preferences> preferences;
+    private Boolean firstLogin;
+
+    @DynamoDBTypeConverted(converter = PreferencesConverter.class)
+    private List<Preferences> preferences;
     @Override
     @DynamoDBIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

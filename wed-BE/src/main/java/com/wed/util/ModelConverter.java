@@ -12,6 +12,7 @@ public class ModelConverter {
                 .username(registerUserDto.email())
                 .password(password)
                 .role("ROLE_USER")
+                .firstLogin(true)
                 .build();
     }
 }
