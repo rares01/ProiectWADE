@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-preferences-popup',
@@ -12,27 +13,49 @@ export class PreferencesPopupComponent implements OnInit {
 
   public preferencesForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
-    private readonly dialogRef: MatDialogRef<PreferencesPopupComponent>
-
+    private readonly dialogRef: MatDialogRef<PreferencesPopupComponent>,
+    private userService: UserService,
+    private authService: AuthService,
   ) { }
+
   ngOnInit(): void {
     this.initForm();
   }
   public savePreferences() {
     this.dialogRef.close();
+
+    const preferencesKeys: string[] = ['tutorials', 'presentations', 'source', 'events', 'backend', 'frontend', 'mobile', 'java', 'cpp', 'cs', 'python',
+      'node', 'javascript', 'html', 'css', 'angular', 'react', 'vue', 'linux', 'macos', 'windows', 'europe', 'africa', 'australia', 'asia', 'antarctica',
+      'north_am', 'south_am', 'spring', 'net', 'django', 'flask', 'react_nat', 'swift', 'objective', 'kotlin', 'flutter'];
+
+    const uppercaseKeys: string[] = [];
+    preferencesKeys.forEach(key => {
+      if (this.checkIfChecked(key)) {
+        const formattedKey = key.replace(/-/g, '_').toUpperCase();
+        uppercaseKeys.push(formattedKey);
+      }
+    });
+
+    this.userService.savePreferences(uppercaseKeys).subscribe();
   }
+
+
   public verifyBackend() {
-    return  this.preferencesForm.controls['backend'].value;
+    return this.preferencesForm.controls['backend'].value;
   }
 
   public verifyFrontend() {
-    return  this.preferencesForm.controls['frontend'].value;
+    return this.preferencesForm.controls['frontend'].value;
   }
 
   public verifyMobile() {
-    return  this.preferencesForm.controls['mobile'].value;
+    return this.preferencesForm.controls['mobile'].value;
   }
-  
+
+  private checkIfChecked(a: string): boolean {
+    return this.preferencesForm.controls[a].value
+  }
+
   private initForm(): void {
     this.preferencesForm = this.formBuilder.group({
       //TOPICS
@@ -49,17 +72,17 @@ export class PreferencesPopupComponent implements OnInit {
       cpp: ['', []],
       cs: ['', []],
       python: ['', []],
-      ruby: ['', []],
       node: ['', []],
       //FE
       angular: ['', []],
       react: ['', []],
       vue: ['', []],
-      razor: ['', []],
-      next: ['', []],
+      javascript: ['', []],
+      html: ['', []],
+      css: ['', []],
       //OS
       linux: ['', []],
-      macox: ['', []],
+      macos: ['', []],
       windows: ['', []],
       //GEO
       europe: ['', []],
@@ -67,17 +90,15 @@ export class PreferencesPopupComponent implements OnInit {
       australia: ['', []],
       asia: ['', []],
       antarctica: ['', []],
-      northAm: ['', []],
-      southAm: ['', []],
+      north_am: ['', []],
+      south_am: ['', []],
       //FRAMEWORKS
       spring: ['', []],
       net: ['', []],
-      rails: ['', []],
       django: ['', []],
       flask: ['', []],
-      nest: ['', []],
       //MOBILE
-      reactNat: ['', []],
+      react_nat: ['', []],
       swift: ['', []],
       objective: ['', []],
       kotlin: ['', []],

@@ -42,34 +42,35 @@ public class DynamoDBConfig {
 
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
-//        AmazonDynamoDB amazonDynamoDB
-//                = new AmazonDynamoDBClient(amazonAWSCredentials());
-//
-//        if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
-//            amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
-//        }
+        AmazonDynamoDB amazonDynamoDB
+                = new AmazonDynamoDBClient(amazonAWSCredentials());
 
-        return AmazonDynamoDBClientBuilder.standard().withRegion(Regions.EU_WEST_1).build();
+        if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
+            amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
+        }
+
+//        return AmazonDynamoDBClientBuilder.standard().withRegion(Regions.EU_WEST_1).build();
+        return amazonDynamoDB;
     }
 
-//    @Bean
-//    public AWSCredentials amazonAWSCredentials() {
-//        return new BasicAWSCredentials(
-//                amazonAWSAccessKey, amazonAWSSecretKey);
-//    }
+    @Bean
+    public AWSCredentials amazonAWSCredentials() {
+        return new BasicAWSCredentials(
+                amazonAWSAccessKey, amazonAWSSecretKey);
+    }
 
     @Bean
     CommandLineRunner createDynamoDBTables() {
         return args -> {
-//            DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(DynamoDbClient.builder()
-//                    .credentialsProvider(StaticCredentialsProvider.create(
-//                            AwsBasicCredentials.create(amazonAWSAccessKey, amazonAWSSecretKey)))
-//                    .endpointOverride(URI.create(amazonDynamoDBEndpoint))
-//                    .build()).build();
+            DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(DynamoDbClient.builder()
+                    .credentialsProvider(StaticCredentialsProvider.create(
+                            AwsBasicCredentials.create(amazonAWSAccessKey, amazonAWSSecretKey)))
+                    .endpointOverride(URI.create(amazonDynamoDBEndpoint))
+                    .build()).build();
 
-            var enhancedClient = DynamoDbEnhancedClient.builder()
-                    .dynamoDbClient(DynamoDbClient.builder().region(Region.EU_WEST_1).build())
-                    .build();
+//            var enhancedClient = DynamoDbEnhancedClient.builder()
+//                    .dynamoDbClient(DynamoDbClient.builder().region(Region.EU_WEST_1).build())
+//                    .build();
 
             createTable(enhancedClient, User.class);
         };

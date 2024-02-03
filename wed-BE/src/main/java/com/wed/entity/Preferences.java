@@ -1,0 +1,33 @@
+package com.wed.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+public enum Preferences {
+    //SOURCE
+    TUTORIALS, PRESENTATIONS, SOURCE, EVENTS,
+
+    //TOPIC
+    BACKEND, FRONTEND, MOBILE,
+
+    //BACKEND LANGUAGE
+    JAVA, CPP, CS, PYTHON, NODE,
+
+    //FRONTEND
+    JAVASCRIPT, HTML, CSS, ANGULAR, REACT, VUE,
+
+    //MOBILE
+    REACT_NATIVE, SWIFT, OBJECTIVE, KOTLIN, FLUTTER,
+
+    //TARGET PLATFORM
+    LINUX, MACOS, WINDOWS,
+
+    //AREA
+    EUROPE, AFRICA, AUSTRALIA, ASIA, ANTARCTICA, NORTH_AM, SOUTH_AM,
+
+    //FRAMEWORK
+    SPRING, NET, RAILS, DJANGO, FLASK
+
+}
+
+

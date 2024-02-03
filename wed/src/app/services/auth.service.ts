@@ -15,7 +15,6 @@ export class AuthService {
   private decodedToken: DecodedToken | null;
   private httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 
-
   constructor(private http: HttpClient) { }
 
   public get token(): DecodedToken | null {
@@ -80,7 +79,7 @@ export class AuthService {
     localStorage.removeItem('JWT_TOKEN');
   }
 
-  private setSession(authResult: string): void {
+  public setSession(authResult: string): void {
     this.decodeToken(authResult);
 
     if (!this.decodedToken) {

@@ -31,12 +31,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserService userService;
 
-
     @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
 
     @Override
     public LoginResponseDto authenticateByRole(LoginRequestDto loginRequestDTO) throws AuthenticationLoginException {
