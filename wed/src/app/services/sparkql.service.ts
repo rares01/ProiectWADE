@@ -11,12 +11,11 @@ export class SparkqlService {
 
   public getResources(query: string) {
     const url = `${environment.apiPath}/sparql`;
-    const body = JSON.stringify({
+    const body = {
       query: query,
-    });
+    };
 
     return this.http.post(url, body, {
-      responseType: 'text',
       headers: new HttpHeaders({
         'Accept': 'text/csv'
       })
