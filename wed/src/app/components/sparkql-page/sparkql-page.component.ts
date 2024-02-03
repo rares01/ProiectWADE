@@ -1,13 +1,35 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SparkqlService } from 'src/app/services/sparkql.service';
 
 @Component({
   selector: 'app-sparkql-page',
   templateUrl: './sparkql-page.component.html',
   styleUrls: ['./sparkql-page.component.scss']
 })
-export class SparkqlPageComponent {
-  constructor(private _ngZone: NgZone) {}
+export class SparkqlPageComponent implements OnInit {
+  public sparkqlForm: FormGroup;
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  constructor(private _ngZone: NgZone,
+    private sparkqlServce: SparkqlService,
+    private formBuilder: FormBuilder,) { }
+
+    @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
+  public ngOnInit(): void {
+    this.initForm();
+  }
+
+  public getResources() {
+
+    this.sparkqlServce.getResources(this.sparkqlForm.controls['query'].value).subscribe();
+
+  }
+
+  private initForm(): void {
+    this.sparkqlForm = this.formBuilder.group({
+      query: ['', [Validators.required]],
+    })
+  }
 }

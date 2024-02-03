@@ -51,7 +51,9 @@ import { SparkqlPageComponent } from './components/sparkql-page/sparkql-page.com
     MatDialogModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatRadioModule 
+    MatRadioModule ,
+    ReactiveFormsModule,
+
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
