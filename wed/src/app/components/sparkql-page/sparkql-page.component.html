@@ -1,5 +1,7 @@
- <div class="container">
+<div [formGroup]="sparkqlForm" class="container">
   <mat-form-field appearance="fill" class="custom-textarea">
-    <textarea matInput placeholder="Enter spark ql query here"></textarea>
+    <!-- Add matInput directive here -->
+    <textarea matInput formControlName="query" placeholder="Enter spark ql query here"></textarea>
   </mat-form-field>
+  <button mat-stroked-button color="accent" (click)="getResources()">Get resources</button>
 </div>
