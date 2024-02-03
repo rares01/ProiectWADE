@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class PreferencesPopupComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private readonly dialogRef: MatDialogRef<PreferencesPopupComponent>,
     private userService: UserService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,8 @@ export class PreferencesPopupComponent implements OnInit {
 
     this.userService.savePreferences(uppercaseKeys).subscribe();
   }
+
+
   public verifyBackend() {
     return this.preferencesForm.controls['backend'].value;
   }

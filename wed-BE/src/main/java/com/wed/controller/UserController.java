@@ -5,10 +5,7 @@ import com.wed.entity.Preferences;
 import com.wed.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +18,13 @@ public class UserController {
 
     @PostMapping("/preferences")
     public ResponseEntity<?> savePreferences(@RequestBody List<Preferences> preferencesList) {
-        LoginResponseDto loginResponseDto = userService.saveUserPreferences(preferencesList);
-        return ResponseEntity.ok(loginResponseDto);
+        userService.saveUserPreferences(preferencesList);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/firstLogin")
+    public ResponseEntity<?> firstLogin() {
+        Boolean firstLogin = userService.firstLogin();
+        return ResponseEntity.ok(firstLogin);
     }
 }

@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean firstLogin() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getFirstLogin();
+    }
+    @Override
     public User updateFirstLogin(User user) {
         
         if(user.getFirstLogin()) {
@@ -56,17 +61,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginResponseDto saveUserPreferences(List<Preferences> preferencesList) {
+    public void saveUserPreferences(List<Preferences> preferencesList) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user = updateFirstLogin(user);
 
         user.setPreferences(preferencesList);
         userRepository.save(user);
-        Map<String, Object> extraClaims = setClaims(user);
-        String token = jwtUtil.generateToken(extraClaims, user);
-        return LoginResponseDto.builder()
-                .token(token)
-                .build();
     }
     private User validator(RegisterUserDto registerUserDto) throws DtoValidateException {
         if (StringUtils.isBlank(registerUserDto.email())) {

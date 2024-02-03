@@ -14,22 +14,24 @@ export class UserService {
 
 
   constructor(private http: HttpClient,
-    private authService: AuthService,
     ) { }
 
   public savePreferences(
     preferencesList: string[]
-  ): Observable<void> {
+  ): Observable<string[]> {
 
     const url = `${environment.apiPath}/user/preferences`;
-    return this.http.post(
+    return this.http.post<string[]>(
       url, preferencesList, { headers: this.httpHeaders }
-    ).pipe(
-      map((data) => {
-        const result = data as JwtToken;
-        this.authService.setSession(result.token);
-      })
-    );;
+    );
+  }
+
+  public firstLogin(
+  ): Observable<boolean> {
+    const url = `${environment.apiPath}/user/firstLogin`;
+    return this.http.get<boolean>(
+      url, { headers: this.httpHeaders }
+    );
   }
   
 }

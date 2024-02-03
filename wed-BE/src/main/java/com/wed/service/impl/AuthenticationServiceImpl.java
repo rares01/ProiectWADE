@@ -79,7 +79,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         extraClaims.put("username", userDetails.getUsername());
         extraClaims.put("role", userDetails.getRole());
-        extraClaims.put("firstLogin", userDetails.getFirstLogin());
 
         return extraClaims;
     }

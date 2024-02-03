@@ -14,7 +14,9 @@ public interface UserService {
     void saveUser(RegisterUserDto registerUserDto) throws DtoValidateException;
     Optional<User> findByUsername(String username);
 
-    LoginResponseDto saveUserPreferences(List<Preferences> preferencesList);
+    void saveUserPreferences(List<Preferences> preferencesList);
 
     User updateFirstLogin(User user);
+
+    Boolean firstLogin();
 }

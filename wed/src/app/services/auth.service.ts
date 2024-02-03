@@ -15,7 +15,6 @@ export class AuthService {
   private decodedToken: DecodedToken | null;
   private httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
 
-
   constructor(private http: HttpClient) { }
 
   public get token(): DecodedToken | null {
@@ -35,13 +34,6 @@ export class AuthService {
 
   public get isLoggedIn(): boolean {
     return this.checkIfTokenExists();
-  }
-
-  public get isFirstLogin(): boolean | null {
-    if (this.token != null) {
-      return this.token.firstLogin;
-    }
-    return null;
   }
 
   public register(
