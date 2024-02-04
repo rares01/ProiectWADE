@@ -1,6 +1,6 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { AfterViewInit, Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SparkqlService } from 'src/app/services/sparkql.service';
 import * as Papa from 'papaparse';
 import { Resource } from 'src/app/models/resource.model';
@@ -25,14 +25,24 @@ export class SparkqlPageComponent implements OnInit, AfterViewInit {
     private sparkqlServce: SparkqlService,
     private formBuilder: FormBuilder,) { }
 
+
   public ngOnInit(): void {
     this.initForm();
+    this.getResourcesInit();
   }
 
   public ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
+  public getResourcesInit() {
+
+    this.sparkqlServce.getResources("select ?subject ?predicate ?object where {?subject ?predicate ?object} limit 1000").subscribe((result: any) => {
+      this.dataCsv = result;
+      this.parse();
+    });
+
+  }
   public getResources() {
 
     this.sparkqlServce.getResources(this.sparkqlForm.controls['query'].value).subscribe((result: any) => {

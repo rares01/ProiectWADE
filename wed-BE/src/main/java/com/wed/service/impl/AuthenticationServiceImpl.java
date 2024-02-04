@@ -57,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<User> user = userService.findByUsername(registerUserDto.email());
 
             if (user.isPresent()) {
-            throw new DtoValidateAlreadyExistsException("Test");
+            throw new DtoValidateAlreadyExistsException("Email already exists!");
         }
 
         userService.saveUser(registerUserDto);
