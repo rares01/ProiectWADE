@@ -20,7 +20,8 @@
                 <button mat-stroked-button color="accent" (click)="goToSparqlPage()">Go to sparql page</button>
             </div>
         </div>
-        <div class="mat-elevation-z8 tabel-small">
+        <div class="mat-elevation-z8 responsive-table-container">
+            <!-- class="mat-elevation-z8 tabel-small" -->
             <table mat-table [dataSource]="dataSource">
 
                 <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">

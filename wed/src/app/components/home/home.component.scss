@@ -2,12 +2,29 @@
   width: 70%;
 }
 
+.responsive-table-container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+table {
+  width: 100%;
+}
+
+mat-paginator {
+  width: 100%; 
+}
+
+
 .tabelu-full {
   width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
 }
 
 .home{
@@ -16,23 +33,13 @@
 }
 
 .filters {
-  margin-top: 20px;
+  margin-top: 90px;
   margin-left: 20px;
 }
 
 .btn-block{
 margin-top: 10px;
 }
-
-// .btn-add {
-//   margin-top: 20px;
-// }
-
-// .buttons {
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-// }
 
 .btn-add {
   margin-top: 20px;
@@ -44,12 +51,13 @@ margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between; 
+  padding: 10px;
 }
 
 
 .buttons > .btn-add:first-child {
   justify-content: flex-start; 
-margin-right: 732px;
+margin-right: 1040px;
 }
 
 .buttons > .btn-add:last-child {
