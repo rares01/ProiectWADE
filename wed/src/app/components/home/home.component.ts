@@ -10,6 +10,7 @@ import * as Papa from 'papaparse';
 import { SparkqlService } from 'src/app/services/sparkql.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -17,12 +18,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  public isFirstLogin: boolean;
+  public isFirstLogin = false;
   public displayedColumns: string[] = ['subject', 'predicate', 'object'];
   public dataSource = new MatTableDataSource<Resource>([]);
   public formFilters: FormGroup;
   public filters: any;
   private dataCsv: any;
+  private preferences: any;
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -31,24 +34,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private sparkqlServce: SparkqlService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private authService: AuthService
   ) { }
 
   public ngOnInit(): void {
     this.initUserInfoData();
-    this.getResources();
-    this.initFilters();
+    if (!this.isFirstLogin) {
+      this.initFilters();
+    }
   }
+
   public ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
   public openDialogPreferences(): void {
-    if(this.isFirstLogin) {
-    
+    if (this.isFirstLogin) {
+
       const dialogRef = this.dialogService.open(PreferencesPopupComponent, { width: '60%', height: '55%', disableClose: true });
 
-      dialogRef.afterClosed().subscribe(() =>  {
-      console.log('The dialog was closed');
+      dialogRef.afterClosed().subscribe(() => {
+        window.location.reload(); console.log('The dialog was closed');
       });
     }
 
@@ -64,7 +70,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   public getResources() {
 
-    this.sparkqlServce.getResources("select ?subject ?predicate ?object where {?subject ?predicate ?object} limit 1000").subscribe((result: any) => {
+    this.sparkqlServce.getResourcesByFilter(this.preferences).subscribe((result: any) => {
       this.dataCsv = result;
       this.parse();
     });
@@ -78,6 +84,38 @@ export class HomeComponent implements OnInit, AfterViewInit {
       console.log('Parsed Data:', this.dataSource.data);
     }).catch((error: any) => {
       console.error('Error parsing CSV:', error);
+    });
+  }
+
+
+  public submit() {
+    const selectedOptions = this.formFilters.value.checkboxes
+      .map((checked: any, i: string | number) => checked ? this.filters[i] : null)
+      .filter((v: null) => v !== null);
+
+      let requestList = this.mapRequestFilters(selectedOptions);
+      if(requestList.length === 0) {
+        requestList = this.preferences;
+      }
+      this.sparkqlServce.getResourcesByFilter(requestList).subscribe((result: any) => {
+        this.dataCsv = result;
+        this.parse();
+      });
+  }
+
+  get checkboxes() {
+    return this.formFilters.controls['checkboxes'] as FormArray;
+  }
+
+  public goToSparqlPage() {
+    this.router.navigate(['/sparql']);
+  }
+
+  public logout() {
+    this.authService.logout();
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('login', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 
@@ -96,9 +134,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
     });
   }
-  
+
+  private addCheckboxes() {
+    this.filters.forEach(() => this.checkboxes.push(new FormControl(false)));
+  }
+
   private initUserInfoData() {
-    this.userService.firstLogin().subscribe((result) => { 
+    this.userService.firstLogin().subscribe((result) => {
       this.isFirstLogin = result;
       this.openDialogPreferences();
 
@@ -112,26 +154,114 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
 
     this.userService.getPreferences().subscribe((result) => {
-      this.filters = result;
-      console.log(this.filters);
+      this.preferences = result;
+      this.filters = this.mapResultFilters(result);
       this.addCheckboxes();
+      this.getResources();
     });
-  }
-  public submit() {
-    const selectedOptions = this.formFilters.value.checkboxes
-      .map((checked: any, i: string | number) => checked ? this.filters[i] : null)
-      .filter((v: null) => v !== null);
-    console.log(selectedOptions);
-  }
-  private addCheckboxes() {
-    this.filters.forEach(() => this.checkboxes.push(new FormControl(false)));
+
+
   }
 
-  get checkboxes() {
-    return this.formFilters.controls['checkboxes'] as FormArray;
+  private mapResultFilters(result: any) {
+    const finalResult: string[] = [];
+    const arrayOfNotIncluding: string[] = ['CPP', 'NODE', 'NET', 'CS', 'MACOS', 'OBJECTIVE', 'REACT_NATIVE', 'NORTH_AM', 'SOUTH_AM', 'JAVASCRIPT']
+    if (result.includes('CPP')) {
+      finalResult.push("C++");
+    }
+    if (result.includes('NODE')) {
+      finalResult.push("Node.js");
+
+    }
+    if (result.includes('NET')) {
+      finalResult.push(".NET");
+
+    }
+    if (result.includes('CS')) {
+      finalResult.push("C#");
+
+    }
+    if (result.includes('MACOS')) {
+      finalResult.push("MacOs");
+
+    }
+    if (result.includes('OBJECTIVE')) {
+      finalResult.push("Objective-C");
+
+    }
+    if (result.includes('REACT_NATIVE')) {
+      finalResult.push("React Native");
+
+    }
+    if (result.includes('NORTH_AM')) {
+      finalResult.push("North America");
+
+    }
+    if (result.includes('SOUTH_AM')) {
+      finalResult.push("South America");
+
+    }
+    if (result.includes('JAVASCRIPT')) {
+      finalResult.push("JavaScript");
+    }
+
+    result.forEach((item: string) => {
+      if (!arrayOfNotIncluding.includes(item.toUpperCase())) {
+        const transformedItem = item.charAt(0).toUpperCase() + item.toLowerCase().slice(1);
+        finalResult.push(transformedItem);
+      };
+    });
+    return finalResult;
   }
 
-  public goToSparqlPage() {
-    this.router.navigate(['/sparql']);
+  private mapRequestFilters(params: any) {
+    const finalRequest: string[] = [];
+    const arrayOfNotIncluding: string[] = ['CPP', 'NODE', 'NET', 'CS', 'MACOS', 'OBJECTIVE', 'REACT_NATIVE', 'NORTH_AM', 'SOUTH_AM', 'JAVASCRIPT']
+    if (params.includes('C++')) {
+      finalRequest.push("CPP");
+    }
+    if (params.includes('Node.js')) {
+      finalRequest.push("NODE");
+
+    }
+    if (params.includes('.NET')) {
+      finalRequest.push("NET");
+
+    }
+    if (params.includes('C#')) {
+      finalRequest.push("CS");
+
+    }
+    if (params.includes('MacOs')) {
+      finalRequest.push("MACOS");
+
+    }
+    if (params.includes('Objective-C')) {
+      finalRequest.push("OBJECTIVE");
+
+    }
+    if (params.includes('React Native')) {
+      finalRequest.push('REACT_NATIVE');
+
+    }
+    if (params.includes('North America')) {
+      finalRequest.push("NORTH_AM");
+
+    }
+    if (params.includes('South America')) {
+      finalRequest.push("SOUTH_AM");
+
+    }
+    if (params.includes('JavaScript')) {
+      finalRequest.push("JAVASCRIPT");
+    }
+
+    params.forEach((item: string) => {
+      if (!arrayOfNotIncluding.includes(item.toUpperCase())) {
+        const transformedItem = item.toUpperCase();
+        finalRequest.push(transformedItem);
+      };
+    });
+    return finalRequest;
   }
 }

@@ -1,5 +1,5 @@
 export class Resource {
-    subject: string;
-    predicate: string;
-    object: string;
+    subject?: string;
+    predicate?: string;
+    object?: string;
   }

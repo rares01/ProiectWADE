@@ -22,4 +22,15 @@ export class SparkqlService {
       responseType: 'text'
     });
   }
+
+  public getResourcesByFilter(query: string[]): any {
+    const url = `${environment.apiPath}/sparql/filter`;
+    
+    return this.http.post(url, query, {
+      headers: new HttpHeaders({
+        'Accept': 'text/csv'
+      }),
+      responseType: 'text'
+    });
+  }
 }
