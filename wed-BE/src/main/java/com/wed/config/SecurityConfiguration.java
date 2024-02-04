@@ -1,5 +1,6 @@
 package com.wed.config;
 
+import com.wed.authentication.DisabledRequestsFilter;
 import com.wed.authentication.JwtAuthenticationFilter;
 import com.wed.authentication.WedAuthenticationEntryPoint;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -71,7 +72,8 @@ public class SecurityConfiguration {
                 .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
-                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new DisabledRequestsFilter(), JwtAuthenticationFilter.class);
         return http.build();
     }
 }

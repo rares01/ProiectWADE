@@ -43,6 +43,11 @@ export class LoginComponent implements OnInit {
         }
       );
   }
+
+  public disableButton(): boolean {
+    return this.loginForm.valid;
+
+  }
   private initForm(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email]],

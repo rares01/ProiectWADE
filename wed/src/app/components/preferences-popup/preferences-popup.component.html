@@ -100,7 +100,8 @@
 
     </form>
     <div class="btn">
-        <button mat-stroked-button color="accent" (click)="savePreferences()">Save</button>
+        <button mat-stroked-button color="accent" (click)="logout()">Logout</button>
+        <button mat-stroked-button color="accent" (click)="savePreferences()" [disabled]="!isButtonEnabled">Save</button>
     </div>
 
 </div>

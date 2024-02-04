@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
-import { Observable, map } from 'rxjs';
-import { JwtToken } from '../models/jwt-token.model';
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +31,13 @@ export class UserService {
       url, { headers: this.httpHeaders }
     );
   }
+
+  public getPreferences(
+    ): Observable<any> {
+      const url = `${environment.apiPath}/user/getPreferences`;
+      return this.http.get(
+        url, { headers: this.httpHeaders }
+      );
+    }
   
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,17 +11,22 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./preferences-popup.component.scss']
 })
 export class PreferencesPopupComponent implements OnInit {
+  public isButtonEnabled: boolean = false;
 
   public preferencesForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
     private readonly dialogRef: MatDialogRef<PreferencesPopupComponent>,
     private userService: UserService,
     private authService: AuthService,
+    private router: Router
+
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initForm();
+    this.watchFormChanges();
   }
+
   public savePreferences() {
     this.dialogRef.close();
 
@@ -39,6 +45,15 @@ export class PreferencesPopupComponent implements OnInit {
     this.userService.savePreferences(uppercaseKeys).subscribe();
   }
 
+  public logout() {
+    this.authService.logout();
+    this.dialogRef.close();
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('login', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+
+  }
 
   public verifyBackend() {
     return this.preferencesForm.controls['backend'].value;
@@ -104,5 +119,24 @@ export class PreferencesPopupComponent implements OnInit {
       kotlin: ['', []],
       flutter: ['', []],
     })
+
+    this.checkFormState();
+
+  }
+
+  private watchFormChanges(): void {
+    this.preferencesForm.valueChanges.subscribe(() => {
+      this.checkFormState();
+    });
+  }
+
+  private checkFormState(): void {
+    const formValues = this.preferencesForm.value;
+    this.isButtonEnabled = Object.keys(formValues).some(key => formValues[key]);
+  }
+
+  public disableButton(): boolean {
+    return this.preferencesForm.valid;
+
   }
 }

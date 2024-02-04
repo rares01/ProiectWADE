@@ -19,4 +19,6 @@ public interface UserService {
     User updateFirstLogin(User user);
 
     Boolean firstLogin();
+
+    List<Preferences> getPreferences();
 }

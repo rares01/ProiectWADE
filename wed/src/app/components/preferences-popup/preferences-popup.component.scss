@@ -21,6 +21,14 @@
   margin-top: 10px;
 }
 
+.btn button {
+  margin-right: 15px;
+}
+
+.btn button:last-child {
+  margin-right: 0;
+}
+
 .data {
   margin-top: 1%;
 }

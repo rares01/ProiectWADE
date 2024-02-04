@@ -1,2 +1,38 @@
-<button mat-stroked-button color="accent" class="btn-block" (click)="openDialogResource()">Add a new resource</button>
+<div class="home">
+    <div class="filters">
+        <h3>Filters</h3>
+        <form [formGroup]="formFilters">
+            <div formArrayName="checkboxes" *ngFor="let option of filters; let i = index">
+                <mat-checkbox [formControlName]="i">{{ option }}</mat-checkbox>
+            </div>
+        </form>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="submit()">Get resources by filter</button>
+    </div>
+    
+    <div class="tabelu-full">
+        <div class="buttons">
+            <div class="btn-add">
+                <button mat-stroked-button color="accent" (click)="openDialogResource()">Add a new resource</button>
+            </div>
+            <div class="btn-add">
+                <button mat-stroked-button color="accent" (click)="goToSparqlPage()">Go to sparql page</button>
+            </div>
+        </div>
+        <div class="mat-elevation-z8 tabel-small">
+            <table mat-table [dataSource]="dataSource">
 
+                <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                    <th mat-header-cell *matHeaderCellDef> {{column | titlecase}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of resources elements">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

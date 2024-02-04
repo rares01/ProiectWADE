@@ -1,0 +1,57 @@
+.tabel-small {
+  width: 70%;
+}
+
+.tabelu-full {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home{
+  display: flex;
+  flex-direction: row;
+}
+
+.filters {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.btn-block{
+margin-top: 10px;
+}
+
+// .btn-add {
+//   margin-top: 20px;
+// }
+
+// .buttons {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+// }
+
+.btn-add {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; 
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+}
+
+
+.buttons > .btn-add:first-child {
+  justify-content: flex-start; 
+margin-right: 732px;
+}
+
+.buttons > .btn-add:last-child {
+  justify-content: flex-end; 
+}

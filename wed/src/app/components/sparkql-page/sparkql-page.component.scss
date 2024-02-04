@@ -5,15 +5,16 @@ html, body {
   
   .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
+    height: 30vh; 
   }
   
   .custom-textarea textarea {
     width: 100%; 
-    height: 30vh; 
-    min-height: 100px; 
+    height: 10vh; 
+    min-height: 50px; 
     box-sizing: border-box; 
   }
   
@@ -33,6 +34,14 @@ html, body {
   
   ::ng-deep .mat-textarea-autosize {
     min-height: 200px; 
-    max-height: 30vh; 
+    max-height: 10vh; 
   }
   
+  .tabel-small{
+    width: 70%;
+  }
+  .tabelu-full{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

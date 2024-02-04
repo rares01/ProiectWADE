@@ -68,12 +68,18 @@ public class UserServiceImpl implements UserService {
         user.setPreferences(preferencesList);
         userRepository.save(user);
     }
+
+    @Override
+    public List<Preferences> getPreferences() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getPreferences();
+    }
     private User validator(RegisterUserDto registerUserDto) throws DtoValidateException {
         if (StringUtils.isBlank(registerUserDto.email())) {
-            throw new DtoValidateException("Test");
+            throw new DtoValidateException("Email is blank");
         }
         if (StringUtils.isBlank(registerUserDto.password())) {
-            throw new DtoValidateException("Test");
+            throw new DtoValidateException("Password is blank");
         }
 
         return ModelConverter.registerUserToEntity(registerUserDto, passwordEncoder.encode(registerUserDto.password()));
