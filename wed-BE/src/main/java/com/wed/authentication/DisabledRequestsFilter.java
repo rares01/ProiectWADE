@@ -25,7 +25,8 @@ public class DisabledRequestsFilter extends OncePerRequestFilter {
             "/api/user/preferences",
             "/api/user/firstLogin",
             "/api/user/getPreferences",
-            "/api/sparql"
+            "/api/sparql",
+            "/api/sparql/filter"
     );
 
     @Override
