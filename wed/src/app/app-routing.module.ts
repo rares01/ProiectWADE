@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent, canActivate: [nonAuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [nonAuthGuard] },
-  { path: 'sparkql', component: SparkqlPageComponent, canActivate: [authGuard] },
+  { path: 'sparql', component: SparkqlPageComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 
 ];

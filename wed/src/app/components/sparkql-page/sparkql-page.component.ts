@@ -28,6 +28,7 @@ export class SparkqlPageComponent implements OnInit, AfterViewInit {
   public ngOnInit(): void {
     this.initForm();
   }
+
   public ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
@@ -73,9 +74,5 @@ export class SparkqlPageComponent implements OnInit, AfterViewInit {
       console.error('Error parsing CSV:', error);
     });
   }
-
-  // public updateColumns(columns: string[]): void {
-  //   this.displayedColumns = columns;
-  // }
 
 }
