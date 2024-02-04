@@ -3,7 +3,7 @@
     <textarea matInput formControlName="query" placeholder="Enter sparql query here"></textarea>
   </mat-form-field>
   <div>
-    <button mat-stroked-button color="accent" (click)="getResources()">Get resources</button>
+    <button mat-stroked-button color="accent" (click)="getResources()" [disabled]="!disableButton()">Get resources</button>
   </div>
 </div>
   <div class="tabelu-full">

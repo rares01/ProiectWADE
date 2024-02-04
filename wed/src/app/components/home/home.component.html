@@ -1,3 +1,5 @@
+
+<ng-container *ngIf="!isFirstLogin">
 <div class="home">
     <div class="filters">
         <h3>Filters</h3>
@@ -36,3 +38,7 @@
         </div>
     </div>
 </div>
+<div class="btn-logout">
+    <button mat-stroked-button color="accent" (click)="logout()">Logout</button>
+</div>
+</ng-container>
