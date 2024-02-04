@@ -23,6 +23,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddResourceComponent } from './components/add-resource/add-resource.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { SparkqlPageComponent } from './components/sparkql-page/sparkql-page.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { SparkqlPageComponent } from './components/sparkql-page/sparkql-page.com
     MatCheckboxModule,
     MatRadioModule ,
     ReactiveFormsModule,
-
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

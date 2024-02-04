@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./preferences-popup.component.scss']
 })
 export class PreferencesPopupComponent implements OnInit {
+  public isButtonEnabled: boolean = false;
 
   public preferencesForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
@@ -20,6 +21,8 @@ export class PreferencesPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.watchFormChanges();
+
   }
   public savePreferences() {
     this.dialogRef.close();
@@ -104,5 +107,24 @@ export class PreferencesPopupComponent implements OnInit {
       kotlin: ['', []],
       flutter: ['', []],
     })
+
+    this.checkFormState();
+
+  }
+
+  private watchFormChanges(): void {
+    this.preferencesForm.valueChanges.subscribe(() => {
+      this.checkFormState();
+    });
+  }
+
+  private checkFormState(): void {
+    const formValues = this.preferencesForm.value;
+    this.isButtonEnabled = Object.keys(formValues).some(key => formValues[key]);
+  }
+
+  public disableButton(): boolean {
+    return this.preferencesForm.valid;
+
   }
 }

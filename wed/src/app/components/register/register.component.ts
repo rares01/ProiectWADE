@@ -34,6 +34,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  public disableButton(): boolean {
+    return this.registerForm.valid;
+
+  }
   private initForm(): void {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],

@@ -7,7 +7,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
+    height: 30vh; 
   }
   
   .custom-textarea textarea {
@@ -36,3 +36,11 @@ html, body {
     max-height: 30vh; 
   }
   
+  .tabel-small{
+    width: 70%;
+  }
+  .tabelu-full{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

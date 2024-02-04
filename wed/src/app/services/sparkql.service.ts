@@ -9,7 +9,7 @@ export class SparkqlService {
 
   constructor(private http: HttpClient,) { }
 
-  public getResources(query: string) {
+  public getResources(query: string): any {
     const url = `${environment.apiPath}/sparql`;
     const body = {
       query: query,
@@ -18,7 +18,8 @@ export class SparkqlService {
     return this.http.post(url, body, {
       headers: new HttpHeaders({
         'Accept': 'text/csv'
-      })
+      }),
+      responseType: 'text'
     });
   }
 }
