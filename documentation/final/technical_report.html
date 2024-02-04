@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WED (Web Developer Companion) - technical report</title>
+</head>
+
+<body>
+    <article typeof="schema:ScholarlyArticle">
+        <header>
+            <h1 property="schema:name"> WED (Web Developer Companion) - technical report </h1>
+            <div role="contentinfo">
+                <section typeof="sa:AuthorsList">
+                    <h2> Authors </h2>
+                    <ul>
+                        <li typeof="sa:ContributorRole" property="schema:author">
+                            <span typeof="schema:Person" resource="https://github.com/adrian-vatui">
+                                <meta property="schema:givenName" content="Adrian">
+                                <meta property="schema:familyName" content="Vatui">
+                                <span property="schema:name"> Vatui Adrian </span>
+                            </span>
+
+                        </li>
+
+                        <li typeof="sa:ContributorRole" property="schema:author">
+                            <span typeof="schema:Person" resource="https://github.com/rares01">
+                                <meta property="schema:givenName" content="Rares">
+                                <meta property="schema:familyName" content="Gramescu">
+                                <span property="schema:name"> Gramescu Rares </span>
+                            </span>
+
+                        </li>
+
+                    </ul>
+                </section>
+            </div>
+        </header>
+
+        <section typeof="sa:Introduction" role="doc-introduction">
+            <h2>Introduction</h2>
+            <p>
+                In the rapidly evolving realm of web development, the abundance and dynamism of technical content
+                present both an opportunity and a challenge. Web developers, ranging from novices to experts, constantly
+                seek up-to-date and relevant resources like tutorials, code examples, news, and event information.
+                However, the vastness of available information, scattered across multiple platforms such as DevDocs,
+                GitHub Pages, MDN Web Docs, Reddit, and others, often leads to information overload. Recognizing this
+                challenge, our project aims to develop a multi-device, service-oriented system that intelligently
+                models and manages this plethora of public technical content.
+                <br>
+                Leveraging the principles of Linked Data, our system not only aggregates content from various sources
+                but also semantically enriches it, thereby enhancing its discoverability and usability. The core of our
+                approach lies in creating a network of interconnected data, which is more meaningful and context-aware
+                compared to the traditional isolated data silos. By utilizing a SPARQL endpoint, we enable both human
+                users and software agents to query and retrieve web development knowledge tailored to specific criteria
+                such as programming languages, frameworks, target platforms, purposes, geographical areas, and time
+                periods. This personalized approach ensures that users receive content that is most relevant to their
+                individual needs and preferences.
+                <br>
+                To further enrich the knowledge base, our system integrates additional insights from authoritative
+                sources like DBpedia and Wikidata. This integration not only broadens the spectrum of available
+                information but also adds layers of credibility and depth to the content.
+                In essence, our project represents a step towards a smarter, more connected, and user-centric approach
+                to managing web development knowledge. It promises to be a valuable tool for the global community of web
+                developers, enabling them to stay abreast of the latest trends, technologies, and best practices in the
+                field.
+            </p>
+        </section>
+
+        <section>
+            <h2>Project Scope</h2>
+            <p>
+                The scope of this project encompasses several key areas, aiming to provide a comprehensive solution to
+                the challenges faced by web developers in accessing, managing, and utilizing technical content. The
+                project's scope can be outlined as follows:
+            <ol>
+                <li>
+                    <section>
+                        <h3>Content Aggregation and Management:</h3>
+                        <p> Aggregating and managing public technical
+                            content from sources like DevDocs, GitHub Pages, MDN Web Docs, Reddit, including tutorials,
+                            source-code examples, news, events, and more.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Personalization and Customization:</h3>
+                        <p> Tailoring content based on criteria such as
+                            programming languages, frameworks, target platforms, user preferences, geographical
+                            locations,
+                            and
+                            time periods.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Integration with DBpedia and Wikidata:</h3>
+                        <p>Enriching the knowledge base by integrating
+                            additional knowledge from DBpedia and Wikidata.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>SPARQL Endpoint for Data Access:</h3>
+                        <p>Providing access to the knowledge base via a
+                            SPARQL endpoint, enabling complex queries and retrieval of specific information.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Multi-Device Accessibility:</h3>
+                        <p> Ensuring seamless access and usability across various
+                            devices including desktops, laptops, tablets, and smartphones.</p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>User Experience and Interface Design:</h3>
+                        <p> Focusing on creating an intuitive and
+                            user-friendly interface for navigating, searching, and utilizing the content.</p>
+                    </section>
+                </li>
+            </ol>
+            </p>
+        </section>
+
+        <section>
+            <h2>Architecture</h2>
+            <p>
+                From the beginning, we employed a cloud-native approach to the development and architecture of our
+                application. Components were designed in a scalable manner, and as detached as possible to allow for
+                horizontal scaling.
+            </p>
+
+            <figure typeof="sa:image">
+                <img src="./WADE_final-General Architecture.drawio.png">
+                <figcaption>
+                    Architecture diagram of our app, including the AWS services used for deployment.
+                </figcaption>
+            </figure>
+
+            <section>
+                <h3>Front-end</h3>
+
+                <p>
+                    The front-end of our app handles the presentation and interactivity. It allows users to
+                    authenticate, set their preferences and browse scraped content. It also allows user to write and
+                    execute SPARQL queries in-app.
+                </p>
+            </section>
+
+            <section>
+                <h3>Back-end</h3>
+
+                <section>
+                    <h4>Services</h4>
+
+                    <ul>
+                        <li>
+                            <section>
+                                <h5>Web App</h5>
+
+                                <p>
+                                    This is where most of the business logic resides. The app handles user
+                                    authentication and iteractions, and also serves as a gateway to the graph database
+                                    to allow users to execute SPARQL queries.
+                                </p>
+                            </section>
+                        </li>
+
+                        <li>
+                            <section>
+                                <h5>Web Crawlers Service</h5>
+
+                                <p>
+                                    This service handles crawling and extracting useful data from websites to be loaded
+                                    into our graph database. We designed it in such a way as to allow for easy extension
+                                    via the addition of different crawlers for different websites, and implement a
+                                    proof-of-concept crawler for the <a
+                                        href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web">MDN
+                                        web docs</a> website. The service is composed of 3 main components, along with a
+                                    temporary storage for crawled data.
+                                </p>
+                                <section>
+                                    <h6>URL producer</h6>
+
+                                    <p>
+                                        This function crawls a single page (given as input) for other URLs that should
+                                        be crawled. This component needs to be highly specific for the website that is
+                                        crawled, in order to filter and only URLs from the same website (examples of
+                                        unwanted URLs are links to other websites, or links to the authentication page
+                                        of the current website, or to one of its user's profiles). The URLs are then
+                                        sent to a queue to be processed.
+                                    </p>
+                                </section>
+
+                                <section>
+                                    <h6>URL queue</h6>
+
+                                    <p>
+                                        This queue acts as a buffer between the producers and the consumers. Each URL
+                                        sent to this queue is wrapped within a message, along with a text field that
+                                        specifies which consumer should handle it (in our POC, we set this field to
+                                        "MDN" to indicate the URLs should be processed by the MDN crawler).
+                                    </p>
+                                </section>
+
+                                <section>
+                                    <h6>Crawler</h6>
+
+                                    <p>
+                                        This function consumes URLs from the queue and parses the content from
+                                        their respective webpages. The parsed content is then stored in RDF/XML
+                                        format to be imported into the graph database in bulk.
+                                    </p>
+                                </section>
+
+                                <section>
+                                    <h6>Crawl storage</h6>
+
+                                    <p>
+                                        Because importing extracted RDF data from each URL one by one would be
+                                        inefficient and would increase the load on our database consistently, we decided
+                                        to instead opt for a bulk load approach. For this, we used a temporary storage
+                                        where the crawlers would save the extracted RDF data, after which a manual load
+                                        into the database would be triggered.
+                                    </p>
+                                </section>
+                            </section>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Storage</h4>
+
+                    <p>
+                        Our app stores two different types of data - user data (such as authentication information
+                        and preferences) and resource/content data (such as data scraped from websites). For this, we
+                        used two different storages. The content storage is also queryable via a
+                        publicly-accessible SPARQL endpoint.
+                    </p>
+                </section>
+            </section>
+        </section>
+
+        <section>
+            <h2>Technologies used</h2>
+            <p>
+
+            </p>
+            <ol>
+                <li>
+                    <section>
+                        <h3>Backend technologies</h3>
+                        <ul>
+                            <li>
+                                <p>
+                                    Java and Spring Boot as the app needs to handle potentially large amounts of data
+                                    and user requests, Java's scalability and Spring Boot's efficient resource
+                                    management ensure that our application can grow and perform well under increased
+                                    loads.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    For web scraping, we used Python as it is known for its simplicity and readability,
+                                    making it ideal for
+                                    quickly developing web crawling scripts and tools. We used the <a
+                                        href="https://github.com/RDFLib/rdflib">RDFLib</a> Python library for crawling
+                                    websites and extracting RDF data.
+                                </p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+                <li>
+
+                    <section>
+                        <h3>Frontend technologies</h3>
+                        <ul>
+                            <li>
+                                <p>Angular for user interface</p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+                <li>
+
+                    <section>
+                        <h3>Database management system</h3>
+                        <ul>
+                            <li>
+                                <p>Amazon DynamoDB is a NoSQL database that is more suited towards our needs, as it
+                                    allows for a flexible schema which goes hand-in-hand with rapid development.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    Amazon Neptune, a graph database, will also be used to store the content and the
+                                    relationships. This database is great for our use case as it natively allows queries
+                                    using SPARQL to be made on its contents. We also used Amazon SageMaker Jupyter
+                                    notebooks to browse through, visualize and quickly query the data.
+                                </p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+
+                <li>
+
+                    <section>
+                        <h3>Security</h3>
+                        <ul>
+                            <li>
+                                <p>Spring security as it provides a wide range of security features, including
+                                    authentication,
+                                    authorization, protection against common vulnerabilities (like CSRF, XSS), and
+                                    session management, crucial for any web application.</p>
+                            </li>
+                            <li>
+                                <p>Lombok to create the data model classes and then annotate the fields with standard
+                                    Java validation annotations (like @NotNull, @Size, etc.) for validation purposes.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    JSON Web Tokens (JWT) to manage access and authorize users across our various web
+                                    pages and APIs, as this eliminates the need to have a centralized database that all
+                                    services need to connect to in order to query user permissions.
+                                </p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Deployment</h2>
+            <p>
+                We used the Amazon Web Services (AWS) cloud to deploy and host our application. Deploying
+                directly on the cloud has many advantages, but we are mostly interested in the reduced operational load
+                that this approach provides as opposed to a more DYI model (such as self-hosting). By not having to
+                focus on managing local/self-hosted infrastructure and relying on AWS managed services, we have instead
+                focused on developing the core functionalities of our app. We chose AWS over other cloud providers
+                because we both have some experience using it, and because of the very generous <a
+                    href="#aws-free-tier">free tier</a> it offers.
+            </p>
+
+            <section>
+                <h3>Static Website</h3>
+
+                <p>
+                    For the deployment of the static website (front-end), we used the <a
+                        href="https://aws.amazon.com/s3/">AWS S3</a> service and its website hosting capabilites. Since
+                    the front-end consists of HTML, CSS, Javascript and other static content (such as images), we were
+                    able to simply build our Angular application and host it in a S3 bucket.
+                </p>
+            </section>
+
+            <section>
+                <h3>Web Application</h3>
+
+                <p>
+                    For the deployment of the web application back-end, we used the <a
+                        href="https://aws.amazon.com/elasticbeanstalk/">AWS
+                        Elastic Beanstalk</a> service. This is a service that manages the deployment of server code, and
+                    automatically handles provisioning capacity, load balancing, scaling and health monitoring. Elastic
+                    Beanstalk uses other AWS
+                    services such as <a href="https://aws.amazon.com/ec2/">EC2</a> (virtual machines) to host and deploy
+                    our Spring Boot Java application, and handles the creation and management of other infrastructure
+                    such as IAM roles, Elastic IP addresses and security groups.
+                </p>
+            </section>
+
+            <section>
+                <h3>Web Scraping</h3>
+
+                <p>
+                    In order to handle scraping large amounts of data from various sources, we decided to use <a
+                        href="https://aws.amazon.com/lambda/">AWS Lambda</a> in conjunction with <a
+                        href="https://aws.amazon.com/sqs/">AWS SQS</a>. To overcome the run time limitations of
+                    Lambda functions (currently the maximum allowed run time of a single Lambda function is 15 minutes,
+                    which might not be enough to download and parse a large enough batch of pages), we decided to
+                    instead take advantage of Lambda's scalability. We designed our worker Lambdas to work on batches of
+                    5 URLs, and allowed for up to 5 concurrent executions. By modifying the batch size of the SQS
+                    trigger and the concurrency limit, we can fine-tune the speed at which URLs from the queue are
+                    consumed, and thus data to be imported is produced.
+                </p>
+
+                <figure typeof="sa:image">
+                    <img src="./lambda_run.png" alt="Metrics for running the worker Lambdas">
+                    <figcaption>
+                        Some metrics of the worker Lambdas crawling 273 pages in around 5 minutes, with the previously
+                        described configuration. As it can be seen, this solution is highly scalable as well as
+                        reasonably fast.
+                    </figcaption>
+                </figure>
+
+                <p>
+                    The crawler Lambdas store the extracted data in RDF/XML format into a S3 bucket. Periodically, bulk
+                    loads are triggered so that the data is imported into our graph database, where it can be queried
+                    via SPARQL.
+                </p>
+            </section>
+
+            <section>
+                <h3>Storage</h3>
+
+                <p>
+                    Our app stores two different types of data - user data (such as authentication information and
+                    preferences) and resource/content data (such as data scraped from websites). For this, we used
+                    two different types of storage.
+                </p>
+
+                <ol>
+                    <li>
+                        <section>
+                            <h4>User storage</h4>
+                            <p>
+                                For storing user data, we used <a href="https://aws.amazon.com/dynamodb/">Amazon
+                                    DynamoDB</a>. We chose it because it is a a fully managed, serverless NoSQL database
+                                that has various helpful features such as automatic backups and caching, and is very
+                                cheap, with 25 GB of storage included in the free tier. It can also be installed
+                                locally, which we made use of during the development of the app.
+                            </p>
+                        </section>
+                    </li>
+
+                    <li>
+                        <section>
+                            <h4>Content storage</h4>
+                            <p>
+                                Since the scraped content has to be queryable via SPARQL, it only makes sense for
+                                us to store it into a easy-to-query graph database. This is why we chose <a
+                                    href="https://aws.amazon.com/neptune/">Amazon Neptune</a>, a managed
+                                high-performance graph database that allows us to store large amounts of scraped
+                                data, along with the relationships between the <i>things</i> we scrape.
+                            </p>
+
+                            <p>
+                                AWS also provides a Jupyter environment to run notebooks in, which allowed us to quickly
+                                query and visualize the data contained in our Neptune instance.
+                            </p>
+
+                            <figure typeof="sa:image">
+                                <img src="knowledge_graph.png" alt="Graph representation of the database">
+                                <figcaption>
+                                    Graph representation of the ~10,000 nodes crawled from MDN web docs.
+                                </figcaption>
+                            </figure>
+                        </section>
+                    </li>
+                </ol>
+            </section>
+        </section>
+
+        <section>
+            <h2>Future Enhancements</h2>
+            <ol>
+                <li>
+                    <section>
+                        <h3>Comments on Posts:</h3>
+                        <p>Implementing a feature that allows users to comment on tutorials,
+                            articles, and other shared content. This will facilitate community discussions, provide a
+                            platform for sharing insights, and enable peer-to-peer support and collaboration.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Likes and Reactions:</h3>
+                        <p>
+
+                            Introducing a system for users to express their appreciation or
+                            feedback on posts through likes and various reaction options. This feature will help in
+                            gauging
+                            the
+                            popularity and relevance of the content, as well as encourage more user interaction.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>User-Generated Content Moderation:</h3>
+                        <p>Developing tools and policies for moderating
+                            user-generated content such as comments and posts to ensure a positive and respectful
+                            environment.
+                            This includes implementing automated filters for inappropriate content and providing users
+                            with
+                            the
+                            ability to report concerns.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Personalized Content Recommendations:</h3>
+                        <p>Leveraging user interactions like comments and
+                            likes
+                            to refine the content recommendation algorithms. This will help in delivering more
+                            personalized
+                            and
+                            relevant content to users based on their engagement patterns and preferences.
+                        </p>
+                    </section>
+                </li>
+                <li>
+                    <section>
+                        <h3>Notification System:</h3>
+                        <p>Creating a notification system to alert users about new comments,
+                            reactions, and updates on the content they follow or contribute to, enhancing user
+                            engagement
+                            and
+                            retention.
+                        </p>
+                    </section>
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Data models</h2>
+
+            <p>
+                Our app will handle two main types of data - user data and external resources/content. User data will be
+                mainly composed of authentication info such as e-mails and passwords, but also user-specific
+                preferences. These can range from programming languages to frameworks and platforms, and will be heavily
+                overlapped with the content data. External resources will be composed of data scraped from various
+                websites about web development. We will split this data into different categories, such as tutorials,
+                news, code examples etc. and store various metadata about them, including relationships with other
+                subjects. More info about the data models can be found in our <a
+                    href="https://github.com/rares01/wed/blob/main/documentation/openapi_wed.yaml">OpenAPI
+                    specifications</a>.
+            </p>
+        </section>
+
+        <section>
+            <h2>Linked data principles</h2>
+            <p>
+                Web Developer Companion is adhering to Linked Data principles and becomes part of a larger,
+                interconnected web of data,
+                which enables richer and more meaningful data discovery, sharing, and utilization as it alligns with:
+            </p>
+            <ol>
+
+                <li>
+                    <h3>
+                        Identifying Content with URIs
+                    </h3>
+                    <p>
+                        Each piece of content (like tutorials, code snippets, news) and entities
+                        (like authors, frameworks, languages) in this system is assigned a unique URI. This makes every
+                        element
+                        within this platform easily identifiable and referenceable.
+                    </p>
+                </li>
+
+                <li>
+                    <h3>
+                        Dereferencing URIs Over HTTP
+                    </h3>
+                    <p>
+                        Users and software agents can access these URIs over HTTP to retrieve
+                        information. This will be integrated into this API, ensuring that when a URI
+                        is
+                        accessed, it leads to a specific content piece or entity with relevant information.
+                    </p>
+                </li>
+
+
+                <li>
+                    <h3>
+                        Standardized Information Representation
+                    </h3>
+                    <p>
+                        When a URI is accessed, the information is presented in a
+                        standardized format like RDF or JSON-LD. This ensures compatibility with other Linked Data
+                        systems and
+                        makes it easier for both humans and machines to process and understand the data.
+                    </p>
+                </li>
+
+
+                <li>
+                    <h3>
+                        Interlinking Content
+                    </h3>
+                    <p>
+                        This system interlinks content within its database and also links out to external
+                        sources. For example, a page about a Python tutorial might link to related Python content within
+                        this
+                        system and to external resources like Python’s official documentation or relevant DBpedia
+                        entries.
+                    </p>
+                </li>
+
+            </ol>
+        </section>
+
+        <section typeof="sa:Conclusion" role="doc-conclusion">
+            <h2>Conclusion</h2>
+            <p>
+                As we conclude our exploration of the multi-device, service-oriented system designed to manage and
+                model public technical content for web development, it is clear that this project stands at the
+                confluence of innovation, usability, and community engagement. Our system not only addresses the current
+                needs of web developers for a centralized, intelligent, and easily accessible knowledge base but also
+                paves the way for future advancements in how technical content is consumed and interacted with.
+                <br>
+                By aggregating diverse resources from platforms like DevDocs, GitHub Pages, MDN Web Docs, and Reddit,
+                and enriching them through Linked Data principles, we have laid the groundwork for a more interconnected
+                and context-aware learning environment. The incorporation of user-customizable features, including
+                personalized content filters based on various criteria, ensures that our system remains relevant and
+                valuable to a broad spectrum of users, from beginners to seasoned professionals.
+                <br>
+                Looking ahead, the planned enhancements such as user comments, likes, and a robust moderation system
+                will transform our platform into a dynamic and interactive community hub. This evolution will foster a
+                more engaged and collaborative space, where knowledge sharing and peer-to-peer learning are not just
+                facilitated but actively encouraged.
+                <br>
+                In essence, our project is more than just a content management system; it is a testament to the
+                ever-evolving landscape of web development and the relentless pursuit of innovation that defines this
+                field. We believe that our system will make a significant contribution to the way web developers access,
+                share, and grow their knowledge, ultimately enriching the entire web development community.
+            </p>
+        </section>
+
+        <section typeof="sa:Bibliography" role="doc-bibliography">
+            <h2> References </h2>
+            <ol>
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://aws.amazon.com/free/"
+                    property="schema:citation" id="aws-free-tier">
+                    <cite property="schema:name">
+                        <a href="https://aws.amazon.com/free/">AWS Free Tier</a>
+                    </cite>
+
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+                <li typeOf="schema:WebPage" role="doc-biblioentry"
+                    resource="https://aws.amazon.com/blogs/architecture/serverless-architecture-for-a-web-scraping-solution/"
+                    property="schema:citation" id="aws-scraping">
+                    <cite property="schema:name">
+                        <a
+                            href="https://aws.amazon.com/blogs/architecture/serverless-architecture-for-a-web-scraping-solution/">Serverless
+                            Architecture for a Web Scraping Solution</a>
+                    </cite>
+                    by <span property="schema:author" typeof="schema:Person">
+                        <span property="schema:givenName">Dzidas</span>
+                        <span property="schema:familyName">Martinaitis</span>
+                    </span>; published in
+                    <time property="datePublished" datetime="2020-06-23T08:59:01-07:00">23 JUN 2020</time>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://www.baeldung.com/security-spring"
+                    property="schema:citation" id="spring-security">
+                    <cite property="schema:name">
+                        <a href="https://www.baeldung.com/security-spring">Spring Security</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry"
+                    resource="https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html"
+                    property="schema:citation" id="spring-security">
+                    <cite property="schema:name">
+                        <a
+                            href="https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html">Mockito</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry"
+                    resource="https://junit.org/junit5/docs/current/user-guide/" property="schema:citation"
+                    id="spring-security">
+                    <cite property="schema:name">
+                        <a href="https://junit.org/junit5/docs/current/user-guide/">JUnit</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://angular.io/start"
+                    property="schema:citation" id="spring-security">
+                    <cite property="schema:name">
+                        <a href="https://angular.io/start">Angular</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://projectlombok.org/features/"
+                    property="schema:citation" id="spring-security">
+                    <cite property="schema:name">
+                        <a href="https://projectlombok.org/features/">Project Lombok</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://github.com/RDFLib/rdflib"
+                    property="schema:citation" id="rdfLib">
+                    <cite property="schema:name">
+                        <a href="https://github.com/RDFLib/rdflib">RDFLib</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry"
+                    resource="https://aws.amazon.com/neptune/getting-started/" property="schema:citation"
+                    id="neptune-getting-started">
+                    <cite property="schema:name">
+                        <a href="https://aws.amazon.com/neptune/getting-started/">AWS Neptune - Getting started</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry"
+                    resource="https://aws.amazon.com/blogs/architecture/serverless-architecture-for-a-web-scraping-solution/"
+                    property="schema:citation" id="scraping-architecture">
+                    <cite property="schema:name">
+                        <a
+                            href="https://aws.amazon.com/blogs/architecture/serverless-architecture-for-a-web-scraping-solution/">AWS
+                            Web Scraping Architecture</a>
+
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+            </ol>
+        </section>
+    </article>
+</body>
+
+</html>
