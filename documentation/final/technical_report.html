@@ -129,9 +129,23 @@
         <section>
             <h2>Architecture</h2>
             <p>
-                From the beginning, we employed a cloud-native approach to the development and architecture of our
-                application. Components were designed in a scalable manner, and as detached as possible to allow for
-                horizontal scaling.
+                Adopting a cloud-native approach from the outset has been a cornerstone strategy in the development and
+                architectural design of our application. This modern methodology emphasizes the creation of applications
+                that are inherently scalable, resilient, and agile, fully leveraging the benefits of cloud computing
+                environments. By designing our components to be as decoupled and modular as possible, we've laid a
+                foundation that not only supports but thrives on the principles of horizontal scaling and microservices
+                architecture. This approach ensures that our application can efficiently manage varying loads and
+                seamlessly integrate with cloud services, optimizing both performance and cost.
+                Our commitment to a cloud-native design philosophy means that each component of our application is built
+                to scale effortlessly. This scalability is not just about handling increased loads but also about
+                maintaining performance and availability under varying conditions. By utilizing cloud services'
+                auto-scaling capabilities, our application can dynamically adjust resources based on demand, ensuring
+                consistent performance without over-provisioning or incurring unnecessary costs.The architecture
+                promotes the development of loosely coupled components, each responsible for a distinct piece of
+                functionality. This separation of concerns not only simplifies development and maintenance but also
+                enhances the overall resilience of the application. If one component fails or encounters an issue, the
+                rest of the application can continue to operate unaffected, thereby increasing system reliability.
+
             </p>
 
             <figure typeof="sa:image">
@@ -145,9 +159,34 @@
                 <h3>Front-end</h3>
 
                 <p>
-                    The front-end of our app handles the presentation and interactivity. It allows users to
-                    authenticate, set their preferences and browse scraped content. It also allows user to write and
-                    execute SPARQL queries in-app.
+                    The front-end architecture of our application is meticulously designed to serve as the interactive
+                    gateway for users, facilitating a seamless and intuitive interface that not only engages users but
+                    also empowers them with robust functionalities. This layer of our application is crafted with one of
+                    the
+                    latest versions of technologies and design principles to ensure an optimal user experience, catering
+                    to a wide
+                    range of user actions including authentication, personalization through preferences, content
+                    exploration, and advanced data interaction capabilities such as in-app SPARQL query execution.
+                    Our application's front-end is engineered to provide a secure and user-friendly authentication
+                    process, enabling users to access their accounts safely and effortlessly. Utilizing state-of-the-art
+                    security protocols and encryption measures, we ensure the integrity and confidentiality of user
+                    credentials and data. Once authenticated, users can personalize their experience by setting
+                    preferences that tailor the application's content and functionalities to their individual needs and
+                    interests. This personalization capability enhances user engagement by delivering content and
+                    features that are most relevant and useful to each user.The content browsing feature is a core
+                    component of our front-end, designed to offer users an enriching experience as they navigate through
+                    the vast amounts of scraped content available within our application. Through an intuitive and
+                    responsive interface, users can effortlessly search, filter, and explore content, making the
+                    discovery of information both enjoyable and efficient. The front-end is optimized for performance,
+                    ensuring that content loads quickly and is presented in a user-friendly manner, with options for
+                    customization and filtering to meet the diverse preferences of our user base.A distinguishing
+                    feature of our application is the capability for users to write and execute SPARQL queries directly
+                    within the app. This advanced functionality is seamlessly integrated into the front-end, providing a
+                    powerful tool for users who wish to perform complex searches or data analysis on the graph database.
+                    The SPARQL query interface is designed to be accessible to both novice and experienced users, with
+                    support for syntax highlighting, error feedback, and query optimization tips. By empowering users
+                    with this capability, we enable them to unlock the full potential of the data available, fostering
+                    an environment of exploration and discovery.
                 </p>
             </section>
 
@@ -163,9 +202,99 @@
                                 <h5>Web App</h5>
 
                                 <p>
-                                    This is where most of the business logic resides. The app handles user
-                                    authentication and iteractions, and also serves as a gateway to the graph database
-                                    to allow users to execute SPARQL queries.
+                                    Within our application architecture, a sophisticated and layered approach is
+                                    employed to manage and execute the core business logic that drives user
+                                    interactions, authentication processes, and the facilitation of access to our NOSQL
+                                    database which is DynamoDB and a graph
+                                    database for SPARQL query execution. This architectural design is meticulously
+                                    structured around several key components, namely controllers, services, repositories
+                                    (repos), and controller advice, each playing a pivotal role in ensuring a seamless,
+                                    efficient, and secure user experience.
+                                <ul>
+                                    <li>
+                                        The controllers act as the initial point of contact for incoming client
+                                        requests.
+                                        They are responsible for intercepting HTTP requests, interpreting user inputs,
+                                        and
+                                        delegating the processing of these inputs to the appropriate services.
+                                        Controllers
+                                        are meticulously designed to be lightweight, focusing solely on request handling
+                                        and
+                                        response sending, thereby adhering to the principles of separation of concerns.
+                                    </li>
+                                    <li>
+                                        Services are the backbone of the application's business logic layer. This layer
+                                        is
+                                        where the bulk of the application's logic resides, performing the critical
+                                        operations that underpin user authentication, data manipulation, and interaction
+                                        with the graph database. The services layer abstracts the complexities of the
+                                        underlying business processes, offering a simplified and centralized interface
+                                        for
+                                        the controllers to interact with. It ensures that the business rules and
+                                        policies of
+                                        the application are correctly implemented and adhered to across all user
+                                        interactions.
+                                    </li>
+
+                                    <li>
+                                        Repositories, or repos, serve as the data access layer of the application. They
+                                        provide an abstraction layer over the underlying data store, which, in this
+                                        case, is
+                                        a graph database. Repositories manage the retrieval and storage of data from
+                                        DynamoDB, offering a
+                                        collection of methods for querying the database and manipulating its contents.
+                                        This
+                                        abstraction facilitates a decoupling of the application's core business logic
+                                        from
+                                        the specifics of data storage and retrieval, promoting flexibility and
+                                        scalability.
+                                    </li>
+
+
+                                    <li>
+                                        Controller advice is a specialized component within the Spring framework that
+                                        offers
+                                        a mechanism for global exception handling and data binding customization across
+                                        all
+                                        controllers. It acts as an intercepting layer that captures exceptions thrown by
+                                        controllers or during the execution of controller methods. Controller advice
+                                        then
+                                        processes these exceptions, providing a centralized point for exception
+                                        handling,
+                                        logging, and response customization. This allows for the implementation of
+                                        consistent error handling policies and the generation of user-friendly error
+                                        messages, significantly enhancing the robustness and user experience of the
+                                        application.
+
+                                        Controller advice also plays a crucial role in data binding, where it can be
+                                        used to
+                                        apply global configurations to the data binding process, such as customizing
+                                        formats
+                                        or providing default values. This capability ensures that data exchanged between
+                                        the
+                                        client and the server is correctly interpreted and processed, further
+                                        contributing
+                                        to the application's reliability and ease of use.
+                                    </li>
+                                    <li>
+                                        The integration of controllers, services, repositories, and controller advice
+                                        into a
+                                        cohesive architecture facilitates a clear separation of concerns, making the
+                                        application easier to develop, maintain, and scale. Controllers provide the
+                                        entry
+                                        point for user requests, which are then processed by the services layer where
+                                        the
+                                        business logic resides. Repositories abstract the complexity of data access, and
+                                        controller advice ensures a consistent and elegant handling of exceptions and
+                                        data
+                                        binding.
+
+                                        This architectural design not only enhances the application's efficiency and
+                                        security but also provides a flexible foundation for future expansion and the
+                                        incorporation of additional functionalities, such as SPARQL queries for
+                                        the graph database or enhanced authentication mechanisms for users.
+                                    </li>
+                                </ul>
                                 </p>
                             </section>
                         </li>
@@ -175,24 +304,70 @@
                                 <h5>Web Crawlers Service</h5>
 
                                 <p>
-                                    This service handles crawling and extracting useful data from websites to be loaded
-                                    into our graph database. We designed it in such a way as to allow for easy extension
-                                    via the addition of different crawlers for different websites, and implement a
-                                    proof-of-concept crawler for the <a
+
+                                    Our service is intricately designed to specialize in the nuanced task of web
+                                    crawling and data extraction, with a clear focus on sourcing valuable information
+                                    from various websites for integration into our graph database. This service is not a
+                                    monolithic structure but a highly modular framework that encourages adaptability and
+                                    growth. At its core, the service is engineered to facilitate the seamless
+                                    incorporation of an array of crawlers, each tailored to interact with specific
+                                    websites. This modular architecture ensures that extending the service's
+                                    capabilities to accommodate new websites is both straightforward and efficient,
+                                    requiring minimal adjustments to the existing framework.
+
+                                    A prime example of this system's flexibility is the development and implementation
+                                    of a proof-of-concept (POC) crawler specifically designed for the <a
                                         href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web">MDN
-                                        web docs</a> website. The service is composed of 3 main components, along with a
-                                    temporary storage for crawled data.
+                                        web docs</a>
+                                    website. This POC crawler is a testament to the service's ability to not only
+                                    navigate and parse the content of a highly structured and resource-rich site like
+                                    MDN Web Docs but also to extract relevant data in a manner that respects the site's
+                                    architecture and content organization.
                                 </p>
                                 <section>
                                     <h6>URL producer</h6>
 
                                     <p>
-                                        This function crawls a single page (given as input) for other URLs that should
-                                        be crawled. This component needs to be highly specific for the website that is
-                                        crawled, in order to filter and only URLs from the same website (examples of
-                                        unwanted URLs are links to other websites, or links to the authentication page
-                                        of the current website, or to one of its user's profiles). The URLs are then
-                                        sent to a queue to be processed.
+                                        Within our web crawling framework, a pivotal function is dedicated to
+                                        meticulously exploring individual web pages, provided as input, with the
+                                        specific aim of discovering additional URLs that merit further crawling. This
+                                        function is ingeniously crafted to exhibit a high degree of specificity towards
+                                        the website under examination. This specificity is critical because it enables
+                                        the function to intelligently discern and selectively extract only those URLs
+                                        that are pertinent to the website being crawled, effectively filtering out any
+                                        irrelevant or undesired links. Such unwanted URLs may include, but are not
+                                        limited to, external links directing to other websites, links that navigate to
+                                        the authentication pages of the current website (which could potentially pose
+                                        security risks or lead to unnecessary processing of sensitive login pages), or
+                                        links that point to individual user profiles, which are not only irrelevant to
+                                        our crawling objectives but may also infringe on privacy considerations.
+
+                                        To achieve this level of precision and specificity, the function employs a
+                                        sophisticated algorithm that scrutinizes the HTML or other markup of the page,
+                                        analyzing attributes like the href values of anchor tags, to identify URLs. It
+                                        utilizes a set of carefully designed criteria and filters that are tailored to
+                                        the unique structure and navigation scheme of the target website. These criteria
+                                        might include patterns in the URL that are characteristic of the site's internal
+                                        linking structure, as well as exclusion rules for filtering out links that match
+                                        patterns associated with external sites, authentication pages, or user profiles.
+
+                                        Once the function has successfully identified the URLs that are relevant for
+                                        further crawling, these URLs are not immediately processed. Instead, they are
+                                        dispatched to a queue, which acts as a centralized repository for URLs awaiting
+                                        processing. The queuing mechanism serves multiple purposes: it ensures that URLs
+                                        are processed in an organized and efficient manner, it helps manage the workload
+                                        of the crawlers by evenly distributing tasks, and it provides a buffer that can
+                                        accommodate fluctuations in the rate of URL discovery, thereby preventing any
+                                        single component of the system from becoming overwhelmed.
+
+                                        This targeted approach to URL discovery and queuing is a testament to the
+                                        sophistication and adaptability of our web crawling infrastructure. It allows
+                                        for the nuanced exploration of web pages, ensuring that our crawling efforts are
+                                        both efficient and respectful of the boundaries set by the content and structure
+                                        of the websites we engage with. By focusing on the extraction of only relevant
+                                        and permissible URLs, this function not only enhances the effectiveness of our
+                                        web crawling activities but also aligns with best practices for respectful and
+                                        responsible web scraping.
                                     </p>
                                 </section>
 
@@ -200,10 +375,46 @@
                                     <h6>URL queue</h6>
 
                                     <p>
-                                        This queue acts as a buffer between the producers and the consumers. Each URL
-                                        sent to this queue is wrapped within a message, along with a text field that
-                                        specifies which consumer should handle it (in our POC, we set this field to
-                                        "MDN" to indicate the URLs should be processed by the MDN crawler).
+                                        In our system architecture, we employ a sophisticated queue mechanism that
+                                        serves as an integral intermediary layer, strategically positioned between the
+                                        data producers and consumers. This queue is designed to efficiently manage the
+                                        flow of tasks, specifically the processing of URLs, ensuring a seamless and
+                                        orderly data handling process. The primary role of this queue is to act as a
+                                        buffer, absorbing fluctuations in the rate at which URLs are produced and
+                                        consumed, thereby maintaining system stability and preventing potential
+                                        bottlenecks.
+
+                                        When a URL is identified for processing, it is not simply added to the queue in
+                                        isolation. Instead, each URL is encapsulated within a structured message. This
+                                        message serves as a container that holds not only the URL itself but also
+                                        additional metadata crucial for its processing. A key component of this metadata
+                                        is a text field designated to specify the intended consumer for the message. In
+                                        the context of our proof of concept (POC), this field is explicitly set to
+                                        "MDN", which acts as a directive indicating that the URL should be processed by
+                                        the MDN crawler. This designation is essential for routing the message to the
+                                        appropriate consumer, ensuring that each URL is handled by the correct
+                                        processing entity within our system.
+
+                                        The MDN crawler, referenced in the consumer specification, is a specialized
+                                        component designed to parse and extract data from webpages identified by the
+                                        URLs in the queue. The designation of "MDN" as the consumer ensures that URLs
+                                        requiring specific handling or processing, aligned with the capabilities and
+                                        focus of the MDN crawler, are efficiently routed to it. This targeted approach
+                                        allows for the optimization of processing resources, as each crawler or consumer
+                                        can be tailored to handle specific types of data or sources, enhancing the
+                                        overall efficiency and effectiveness of the data extraction and processing
+                                        workflow.
+
+                                        By implementing this queue-based messaging system, we achieve a high level of
+                                        control and flexibility in the distribution of tasks among various consumers.
+                                        This system not only ensures that each piece of data is processed by the most
+                                        suitable entity but also enables the dynamic scaling of our processing
+                                        capabilities. It allows for the introduction of additional consumers or
+                                        crawlers, each designated to handle different types of URLs, without disrupting
+                                        the operational flow. The inclusion of a specific field to direct URLs to the
+                                        appropriate consumer exemplifies our commitment to creating a modular, scalable,
+                                        and efficient architecture that can adapt to the evolving needs of our data
+                                        processing environment.
                                     </p>
                                 </section>
 
@@ -211,9 +422,50 @@
                                     <h6>Crawler</h6>
 
                                     <p>
-                                        This function consumes URLs from the queue and parses the content from
-                                        their respective webpages. The parsed content is then stored in RDF/XML
-                                        format to be imported into the graph database in bulk.
+
+                                        To enhance the efficiency and scalability of our data processing workflow, we
+                                        have developed a specialized function within our system that plays a critical
+                                        role in the acquisition and integration of web content into our graph database.
+                                        This function is meticulously designed to handle the automated consumption of
+                                        URLs from a pre-defined queue, which acts as a repository of web addresses
+                                        awaiting processing. The primary purpose of this queue is to organize and
+                                        prioritize the URLs for systematic retrieval and parsing, ensuring a steady and
+                                        manageable flow of data into our system.
+
+                                        Upon retrieving a URL from the queue, the function initiates a complex parsing
+                                        operation on the content of the corresponding webpage. This process involves a
+                                        series of sophisticated algorithms designed to accurately interpret and extract
+                                        meaningful information from the webpage, irrespective of its structure or the
+                                        nature of its content. The parsing operation is capable of dealing with various
+                                        formats and types of web content, including text, images, and metadata,
+                                        transforming this raw data into a structured and standardized format that is
+                                        suitable for further processing.
+
+                                        The extracted information is then meticulously converted into the RDF/XML
+                                        format. RDF/XML is a specific serialization format for RDF (Resource Description
+                                        Framework) data, which enables the representation of complex information about
+                                        resources and their relationships in a machine-readable XML-based format. This
+                                        conversion is a crucial step, as it translates the diverse and unstructured data
+                                        collected from webpages into a standardized form that adheres to the principles
+                                        of semantic web technologies, facilitating interoperability and more
+                                        sophisticated data manipulation capabilities.
+
+                                        Once the data is formatted as RDF/XML, it is prepared for bulk importation into
+                                        our graph database. The graph database, designed to efficiently store and query
+                                        data represented in the form of nodes (entities) and edges (relationships), is
+                                        an ideal storage solution for the rich, interconnected data models typical of
+                                        RDF data. Importing the data in bulk, as opposed to individual transactions for
+                                        each piece of parsed content, significantly enhances the efficiency of the data
+                                        integration process. This approach minimizes the overhead associated with
+                                        database transactions and ensures that the system can handle large volumes of
+                                        data without compromising performance.
+
+                                        This function embodies our commitment to leveraging advanced technologies and
+                                        methodologies to streamline the data acquisition and integration process. By
+                                        automating the consumption, parsing, and storage of web content, we not only
+                                        optimize the efficiency of our data processing workflows but also enhance the
+                                        capacity of our graph database to serve as a robust foundation for complex data
+                                        analysis and application development.
                                     </p>
                                 </section>
 
@@ -221,11 +473,36 @@
                                     <h6>Crawl storage</h6>
 
                                     <p>
-                                        Because importing extracted RDF data from each URL one by one would be
-                                        inefficient and would increase the load on our database consistently, we decided
-                                        to instead opt for a bulk load approach. For this, we used a temporary storage
-                                        where the crawlers would save the extracted RDF data, after which a manual load
-                                        into the database would be triggered.
+
+                                        To address the challenge of efficiently managing the importation of Resource
+                                        Description Framework (RDF) data extracted from various URLs, our system
+                                        implements a sophisticated approach designed to optimize performance and reduce
+                                        strain on our database. Recognizing that processing RDF data from each URL
+                                        individually would lead to inefficiencies and a constant, heavy load on our
+                                        database infrastructure, we devised a more streamlined and effective strategy.
+
+                                        Our approach centers around the use of a temporary storage solution as an
+                                        intermediary step in the data importation process. The primary function of this
+                                        temporary storage is to serve as a staging area where our web crawlers, which
+                                        are responsible for extracting RDF data from different URLs, can deposit the
+                                        collected data. This method allows us to aggregate a substantial amount of RDF
+                                        data in a single location, preparing it for bulk processing.
+
+                                        Once a significant amount of data has been accumulated in the temporary storage,
+                                        we initiate a manual loading process. This process involves transferring the RDF
+                                        data from the temporary storage to our main database in a bulk operation. By
+                                        doing so, we significantly reduce the number of individual transactions and
+                                        interactions with our database, thereby minimizing the performance impact and
+                                        avoiding the potential for bottlenecks. This bulk load approach not only ensures
+                                        a more efficient use of our database resources but also streamlines the overall
+                                        process of integrating new RDF data into our system.
+
+                                        This methodology reflects our commitment to implementing scalable, efficient
+                                        solutions that enhance the performance and reliability of our data handling
+                                        processes. By carefully managing the importation of RDF data through a bulk
+                                        loading strategy, we ensure that our database remains responsive and efficient,
+                                        even as it accommodates the continuous influx of new data from a wide array of
+                                        sources.
                                     </p>
                                 </section>
                             </section>
@@ -237,10 +514,27 @@
                     <h4>Storage</h4>
 
                     <p>
-                        Our app stores two different types of data - user data (such as authentication information
-                        and preferences) and resource/content data (such as data scraped from websites). For this, we
-                        used two different storages. The content storage is also queryable via a
-                        publicly-accessible SPARQL endpoint.
+                        Our application manages two distinct categories of data, each serving a unique purpose within
+                        the system. The first category is user data, which encompasses all information related to the
+                        users of our application. This includes, but is not limited to, authentication details such as
+                        usernames and passwords, as well as user preferences that tailor the application experience to
+                        individual needs. The second category is resource or content data, which consists of information
+                        that the application collects or aggregates from various websites. This data is diverse, ranging
+                        from text to specific metadata, depending on the nature of the content and the source
+                        from which it is scraped.
+
+                        To efficiently handle these two types of data, we have implemented two separate storage
+                        solutions, each optimized for its specific type of data. The separation ensures that operations
+                        on one type of data do not impact the performance or integrity of the other, and allows for more
+                        tailored security measures appropriate to the sensitivity of the data stored.
+
+                        Furthermore, the storage system dedicated to resource or content data is designed with
+                        accessibility in mind. It features a SPARQL endpoint that is publicly accessible, enabling users
+                        or third-party applications to query the stored data using SPARQL—a powerful and flexible query
+                        language specifically designed for querying data stored in the Resource Description Framework
+                        (RDF) format. This capability facilitates the retrieval, manipulation, and integration of the
+                        stored content data with other applications and services, thereby enhancing the utility and
+                        reach of the data our application collects and stores
                     </p>
                 </section>
             </section>
@@ -258,19 +552,62 @@
                         <ul>
                             <li>
                                 <p>
-                                    Java and Spring Boot as the app needs to handle potentially large amounts of data
-                                    and user requests, Java's scalability and Spring Boot's efficient resource
-                                    management ensure that our application can grow and perform well under increased
-                                    loads.
+                                    Our choice to utilize Java and Spring Boot for the backbone of our application is
+                                    rooted in the recognition of their proven capabilities in handling large-scale
+                                    applications that demand high performance and scalability. Java, with its strong
+                                    presence in enterprise environments and its robust performance, provides a solid
+                                    foundation for developing applications that can manage extensive amounts of data and
+                                    a high volume of user requests. Spring Boot complements Java by streamlining the
+                                    development process, offering a suite of tools designed to improve productivity and
+                                    application performance.By integrating Java and Spring Boot, we leverage Java's
+                                    powerful processing capabilities and Spring Boot's rapid development tools to create
+                                    an application that is both high-performing and scalable. This combination allows us
+                                    to efficiently handle large volumes of data and user requests, ensuring that our
+                                    application remains responsive and reliable.
+
+                                    The integration also means that we can take advantage of Spring Boot's support for
+                                    embedded servers, making deployment easier and reducing the time from development to
+                                    production. Furthermore, Spring Boot's extensive set of starters simplifies the
+                                    inclusion of various functionalities, from web services to security, further
+                                    enhancing our application's capabilities.
                                 </p>
                             </li>
                             <li>
                                 <p>
-                                    For web scraping, we used Python as it is known for its simplicity and readability,
-                                    making it ideal for
-                                    quickly developing web crawling scripts and tools. We used the <a
-                                        href="https://github.com/RDFLib/rdflib">RDFLib</a> Python library for crawling
-                                    websites and extracting RDF data.
+
+                                    For the intricate task of web scraping within our application's ecosystem, we
+                                    strategically chose Python as the primary programming language due to its
+                                    unparalleled simplicity, readability, and the extensive support it offers for rapid
+                                    development cycles. Python's design philosophy emphasizes code readability and
+                                    succinctness, which significantly reduces the development time for web crawling
+                                    scripts and tools, making it an exceptional choice for tasks that require frequent
+                                    updates and modifications.Python's rich ecosystem is populated with numerous
+                                    libraries and frameworks designed to streamline the web scraping process. This
+                                    ecosystem provides a robust foundation for developing sophisticated web crawling
+                                    scripts that can navigate complex website structures, extract data, and process it
+                                    efficiently. Python’s ability to handle various data formats and its powerful text
+                                    processing capabilities make it particularly well-suited for scraping tasks where
+                                    data needs to be extracted from HTML, XML, or other web-based formats.Within our web
+                                    scraping toolkit, we have incorporated the use of RDFLib, a versatile Python library
+                                    specifically designed for working with RDF (Resource Description Framework) data.
+                                    RDFLib facilitates the parsing, querying, and storage of RDF data, enabling our
+                                    scripts to efficiently interact with and extract structured data from the web.
+                                    RDFLib supports various RDF formats, including RDF/XML, Turtle, and N-Triples,
+                                    making it an invaluable tool for our web crawling endeavors, especially when dealing
+                                    with semantic web technologies or websites that publish their data in RDF format.
+
+                                    <a href="https://github.com/RDFLib/rdflib">RDFLib's</a> capabilities extend beyond
+                                    mere data extraction; it also allows for the
+                                    creation and manipulation of RDF graphs. This feature is particularly useful for
+                                    transforming the extracted RDF data into a format that aligns with our application's
+                                    data models, thereby simplifying the integration of scraped data into our graph
+                                    database.
+                                    Incorporating Python and RDFLib into our web scraping strategy not only enhances our
+                                    ability to quickly develop and deploy effective web crawling tools but also ensures
+                                    that the data extracted is of high quality and ready for integration into our
+                                    application's data ecosystem. This approach underscores our commitment to leveraging
+                                    cutting-edge technologies and methodologies to streamline data acquisition
+                                    processes,
                                 </p>
                             </li>
                         </ul>
@@ -282,7 +619,40 @@
                         <h3>Frontend technologies</h3>
                         <ul>
                             <li>
-                                <p>Angular for user interface</p>
+                                <p>Choosing Angular for the development of our application's user interface is a
+                                    strategic decision that leverages Angular's comprehensive ecosystem, robust
+                                    framework capabilities, and extensive tooling to create a dynamic, efficient, and
+                                    scalable front-end architecture. Angular, developed and maintained by Google, is
+                                    renowned for its ability to build sophisticated single-page applications (SPAs) that
+                                    offer seamless user experiences similar to desktop applications.
+
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    For handling CSV file
+                                    inputs, we incorporated Papa Parse, a powerful and versatile CSV parser. <a
+                                        href="https://github.com/mholt/PapaParse"> Papa Parse</a>
+                                    enables efficient parsing of CSV files into JSON, facilitating the easy handling of
+                                    data within the app. This library was chosen for its speed, reliability, and ability
+                                    to handle large files and complex parsing scenarios with ease. It supports both
+                                    synchronous and asynchronous operations, making it adaptable to various use cases,
+                                    from processing files uploaded by users to fetching and parsing CSV data from
+                                    external sources. Integrating Papa Parse into our frontend has significantly
+                                    improved the app's data processing capabilities, allowing for a seamless experience
+                                    when dealing with CSV-formatted data.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <a href="https://material.angular.io/"> Angular Material </a> helped us as it is a
+                                    UI component library for developers that follows the
+                                    Material Design specifications developed by Google. It provides a set of reusable,
+                                    well-tested, and accessible UI components that are designed to work seamlessly with
+                                    Angular's framework, making it easier for us to build the application consistent,
+                                    aesthetically pleasing,
+                                    and functional quickly.
+                                </p>
                             </li>
                         </ul>
                     </section>
@@ -293,15 +663,57 @@
                         <h3>Database management system</h3>
                         <ul>
                             <li>
-                                <p>Amazon DynamoDB is a NoSQL database that is more suited towards our needs, as it
-                                    allows for a flexible schema which goes hand-in-hand with rapid development.</p>
+                                <p>Amazon DynamoDB, as a NoSQL database service provided by Amazon Web Services (AWS),
+                                    stands at the forefront of our technological infrastructure, primarily due to its
+                                    exceptional alignment with our application's requirements for flexibility,
+                                    scalability, and rapid development. This fully managed database is engineered to
+                                    support key-value and document data structures, making it an ideal choice for
+                                    applications that necessitate a schema-less design or the ability to evolve their
+                                    database schema without significant downtime or complexity.</p>
                             </li>
                             <li>
                                 <p>
-                                    Amazon Neptune, a graph database, will also be used to store the content and the
-                                    relationships. This database is great for our use case as it natively allows queries
-                                    using SPARQL to be made on its contents. We also used Amazon SageMaker Jupyter
-                                    notebooks to browse through, visualize and quickly query the data.
+
+                                    In our quest to build a robust, scalable, and highly efficient application, we have
+                                    strategically chosen to integrate Amazon Neptune along with Amazon SageMaker Jupyter
+                                    notebooks into our technology stack, leveraging their advanced capabilities to
+                                    manage and interact with our data. This combination not only enhances our
+                                    application's data handling capabilities but also aligns perfectly with our
+                                    objectives of providing insightful, fast, and reliable data access to our users.
+                                    Amazon Neptune is a fully managed graph database service provided by AWS, designed
+                                    specifically for storing and navigating relationships between data. It stands out
+                                    for its high-performance graph database engine, optimized for storing billions of
+                                    relationships and querying the graph with millisecond latency. Neptune supports
+                                    popular graph models like Property Graph and W3C's RDF (Resource Description
+                                    Framework), along with their respective query languages, Apache TinkerPop Gremlin,
+                                    and SPARQL, making it exceptionally versatile for a wide range of applications.
+
+                                    For our application, Neptune's native support for SPARQL queries is particularly
+                                    valuable. This feature allows us to directly query the relationships and properties
+                                    within our data, enabling complex, semantic queries that can uncover deep insights
+                                    into the content and its interconnections. This capability is crucial for
+                                    applications that require nuanced understanding and manipulation of data
+                                    relationships, such as recommendation systems, fraud detection, knowledge graphs,
+                                    and network security.
+
+                                    To complement the powerful data storage and querying capabilities of Amazon Neptune,
+                                    we utilize Amazon SageMaker Jupyter notebooks for data exploration, visualization,
+                                    and rapid querying. SageMaker notebooks provide a fully managed Jupyter notebook
+                                    environment that simplifies the process of data analysis and model development
+                                    without the need to manage infrastructure. This environment supports a broad array
+                                    of machine learning (ML) models and libraries, along with direct integration with
+                                    Neptune and other AWS services, facilitating seamless data workflows.
+                                    The integration of Amazon Neptune and Amazon SageMaker Jupyter notebooks into our
+                                    application's architecture represents a strategic alignment of data management and
+                                    analysis capabilities. Neptune provides the foundation for efficiently managing
+                                    graph-based data and relationships, essential for our application's core
+                                    functionalities. In parallel, SageMaker Jupyter notebooks offer a flexible, powerful
+                                    platform for data exploration, visualization, and the application of machine
+                                    learning models directly on the data stored in Neptune.
+
+                                    This synergistic combination not only enhances our ability to manage complex
+                                    datasets but also empowers our team to derive actionable insights, create
+                                    data-driven features, and offer a richer, more intuitive user experience.
                                 </p>
                             </li>
                         </ul>
@@ -317,7 +729,18 @@
                                 <p>Spring security as it provides a wide range of security features, including
                                     authentication,
                                     authorization, protection against common vulnerabilities (like CSRF, XSS), and
-                                    session management, crucial for any web application.</p>
+                                    session management, crucial for any web application. Utilizing UserDetails from
+                                    Spring Security
+                                    encourages adherence to security best practices, including
+                                    separation of concerns, principle of least privilege, and secure by default
+                                    configurations. It allows us to customize the authentication process based on out
+                                    application's specific needs,
+                                    such as handling custom roles or permissions, and adding additional security
+                                    checks.he UserDetails
+                                    interface provides core user information to Spring Security,
+                                    such as username, password, authorities (roles or privileges), and whether the
+                                    account is enabled,
+                                    account non-expired, credentials non-expired, and account non-locked.</p>
                             </li>
                             <li>
                                 <p>Lombok to create the data model classes and then annotate the fields with standard
@@ -328,7 +751,95 @@
                                 <p>
                                     JSON Web Tokens (JWT) to manage access and authorize users across our various web
                                     pages and APIs, as this eliminates the need to have a centralized database that all
-                                    services need to connect to in order to query user permissions.
+                                    services need to connect to in order to query user permissions. We created a JWT
+                                    filter which is implemented as a custom filter in the Spring Security filter
+                                    chain.It intercepts incoming requests, extracts the JWT from the request headers,
+                                    validates the token, and sets the authentication in the SecurityContext if the token
+                                    is valid. This process enables our application to protect endpoints and ensure that
+                                    only authenticated and authorized users can access them. The filter
+                                    checks for the presence of the Authorization header and validates the JWT token
+                                    contained within it. By extracting and validating the token, the filter ensures that
+                                    only requests with valid tokens proceed, thereby protecting the application against
+                                    unauthorized access.By ensuring that every request is authenticated via JWT, the
+                                    filter enforces a consistent security policy across the application. JWTs can
+                                    securely transmit information between parties as a JSON object, and since JWTs can
+                                    be signed, the information can be verified and trusted. This mechanism also supports
+                                    encryption, providing confidentiality for sensitive data.
+
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    DisabledRequestsFilter class is a custom security filter
+                                    designed for Spring Security framework. This filter
+                                    extends OncePerRequestFilter, ensuring it is executed once per request to provide
+                                    specific security checks.This filter establishes a mechanism to selectively restrict
+                                    access to certain parts of the application based on the request path and the
+                                    authentication state of the user. By defining a list of validPaths, the filter
+                                    allows for the specification of endpoints that might require additional security
+                                    checks or be exempt from certain restrictions. This selective access control is
+                                    crucial for applications needing to differentiate between publicly accessible
+                                    endpoints and those requiring authentication.
+                                    The filter checks the authentication status of the current user and further inspects
+                                    whether the user meets specific criteria (e.g., isUser() and isUserApproved())
+                                    before allowing access to sensitive endpoints. This approach ensures that not just
+                                    any authenticated user, but only those with the correct roles and states (like
+                                    having passed their first login), can access certain functionalities. It's a way to
+                                    implement fine-grained access control, enhancing the security posture of the
+                                    application.
+                                    The use of a static list of validPaths and the method checkIfShouldDisableRequest to
+                                    evaluate request paths provides a clear and maintainable way to manage which
+                                    endpoints are subject to this filter's logic. This approach supports scalability, as
+                                    new paths can be easily added to or removed from the list as the application
+                                    evolves.The filter integrates seamlessly with the Spring Security context, utilizing
+                                    SecurityContextHolder to access authentication details and make security decisions
+                                    based on the current user's authentication and authorization information. This
+                                    integration ensures that the filter benefits from Spring Security's comprehensive
+                                    security features, such as secure session management, authentication mechanisms, and
+                                    role-based access control.Implementing a custom filter like DisabledRequestsFilter
+                                    is a powerful approach to enhancing a web application's security. It allows for
+                                    precise control over request handling based on authentication state and specific
+                                    application logic, thereby ensuring that only authorized users can access certain
+                                    functionalities. This filter exemplifies how Spring Security's extensibility can be
+                                    leveraged to implement application-specific security requirements, making it an
+                                    invaluable tool in the development of secure web applications.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Authentication guards in Angular are crucial for controlling access to routes based
+                                    on certain conditions, such as whether a user is authenticated. These guards
+                                    implement interfaces provided by Angular's router package, such as CanActivate,
+                                    CanActivateChild, or CanLoad, to manage navigation to a route or a set of routes.
+                                    The primary purpose of an authentication guard is to protect routes from
+                                    unauthorized access, redirecting users to a login page if they are not
+                                    authenticated, for example.The guard is implemented as a simple function that can be
+                                    reused across multiple routes. This approach keeps our routing configuration clean
+                                    and easy to understand, and it allows us to apply the same logic consistently
+                                    across your application without duplicating code.
+                                    The guard checks for authentication by verifying the presence of a JWT token.
+                                    Storing the JWT in local storage and checking its existence to determine the user's
+                                    authentication state is a
+                                    straightforward and effective way to manage client-side authentication.
+                                    This guard ensures that navigation to certain parts of our application is
+                                    conditional on
+                                    the user's authentication state, promoting security and improving the user
+                                    experience.
+                                </p>
+                            </li>
+
+                            <li>
+                                <p>
+                                    The interceptor is a critical component of our frontend architecture, designed to
+                                    enhance the security of HTTP requests. It automatically appends an Authentication
+                                    header with a JSON Web Token (JWT) to every outgoing request. This JWT is retrieved
+                                    from the local storage, where it is stored upon a user's successful login. The
+                                    primary function of this interceptor is to ensure that all requests are
+                                    authenticated seamlessly without requiring manual header configuration. This
+                                    mechanism not only simplifies the development process but also centralizes the
+                                    authentication logic, making the maintenance and updates more manageable. It plays a
+                                    pivotal role in securing the app by ensuring that every request is sent with the
+                                    necessary credentials.
                                 </p>
                             </li>
                         </ul>
@@ -525,13 +1036,35 @@
             <h2>Data models</h2>
 
             <p>
-                Our app will handle two main types of data - user data and external resources/content. User data will be
-                mainly composed of authentication info such as e-mails and passwords, but also user-specific
-                preferences. These can range from programming languages to frameworks and platforms, and will be heavily
-                overlapped with the content data. External resources will be composed of data scraped from various
-                websites about web development. We will split this data into different categories, such as tutorials,
-                news, code examples etc. and store various metadata about them, including relationships with other
-                subjects. More info about the data models can be found in our <a
+                In the development and operation of our application, we are focusing on managing two principal
+                categories of data with meticulous attention to detail and security: user data and external
+                resources/content. This dual focus is pivotal in ensuring that our application not only provides a
+                personalized and secure user experience but also serves as a comprehensive repository of web development
+                knowledge, curated from various online sources.The cornerstone of user data within our application
+                encompasses essential authentication details, primarily comprising emails and passwords. Handling this
+                sensitive information demands the highest standards of security to protect against unauthorized access
+                and ensure user privacy. We implement robust encryption and secure storage practices, alongside
+                stringent authentication protocols, to maintain the integrity and confidentiality of user
+                accounts.Beyond authentication, our application delves into personalization, capturing user-specific
+                preferences that significantly enhance the user experience. These preferences can cover a wide array of
+                interests within the web development domain, including but not limited to preferred programming
+                languages, frameworks, and platforms.The external resources or content data component of our application
+                is an expansive collection of information related to web development, meticulously scraped from a
+                diverse array of reputable websites. This data encompasses tutorials, documentation, best practices, and
+                the latest trends in web development, providing our users with a rich, up-to-date knowledge base.To
+                maximize the value of this collected data, we employ sophisticated data processing and organization
+                techniques. This ensures that the content is not only current but also categorized and indexed in a
+                manner that facilitates easy access and discovery. Whether our users are beginners seeking foundational
+                knowledge or experienced developers looking for advanced topics, our application serves as a gateway to
+                a vast array of web development resources.In managing both user data and external resources, we
+                prioritize security, privacy, and performance. Robust data protection measures are in place to safeguard
+                user information, while efficient data management practices ensure that our application remains fast and
+                responsive, even as it scales to accommodate more users and content.Our application's approach to
+                handling user data and external resources/content is designed to provide a secure, personalized, and
+                comprehensive learning environment for web developers of all skill levels. By leveraging advanced data
+                management and personalization techniques, we aim to create a platform that not only meets the immediate
+                needs of our users but also supports their growth and development in the ever-evolving field of web
+                development.More info about the data models can be found in our <a
                     href="https://github.com/rares01/wed/blob/main/documentation/openapi_wed.yaml">OpenAPI
                     specifications</a>.
             </p>
@@ -772,6 +1305,57 @@
                         <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
                     </span>
                 </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://jwt.io/" property="schema:citation"
+                    id="jwt-test">
+                    <cite property="schema:name">
+                        <a href="https://jwt.io/">JWT</a>
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry"
+                    resource="https://www.baeldung.com/spring-security-oauth-jwt" property="schema:citation"
+                    id="jwt-spring-integration">
+                    <cite property="schema:name">
+                        <a href="https://www.baeldung.com/spring-security-oauth-jwt">JWT with Spring Integration</a>
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://material.angular.io/"
+                    property="schema:citation" id="angular-material">
+                    <cite property="schema:name">
+                        <a href="https://material.angular.io/">Angular Material</a>
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
+
+                <li typeOf="schema:WebPage" role="doc-biblioentry" resource="https://github.com/mholt/PapaParse"
+                    property="schema:citation" id="papaparse">
+                    <cite property="schema:name">
+                        <a href="https://github.com/mholt/PapaParse">PapaParse</a>
+                    </cite>
+                    <span property="schema:potentialAction" typeof="schema:ReadAction">
+                        <meta property="schema:actionStatus" content="CompletedActionStatus">
+                        (accessed on
+                        <time property="schema:endTime" datatype="xsd:date" datetime="2024-02-04">4 Feb 2024</time>)
+                    </span>
+                </li>
+
             </ol>
         </section>
     </article>
